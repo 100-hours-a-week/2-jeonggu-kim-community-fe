@@ -1,0 +1,126 @@
+
+/* NOTE : 게시글 화면 title */
+.board-title {
+    margin-bottom: 51px;
+    margin-top: 24px;
+    /* font-family: Pretendard; */
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31.2px;
+    text-align: center;
+
+}
+
+/* NOTE : 게시글 section 공통 */
+.post-section {
+    display: flex;
+    flex-direction: column;
+}
+.post-section label {
+    font-weight: bold;
+    padding-bottom: 5px;
+
+    height: 21px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+
+/* NOTE : 게시글 제목 section */
+.post-section-title label:first-child {
+    margin-bottom: 16px;
+}
+
+#txt_content {
+    resize: vertical;
+    resize: none;
+
+    width: 570px;
+    height: 276px;
+    top: 23px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+
+.section-content-line {
+    width: 592px;
+    border: 0.5px solid #ddd;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: -11px;
+}
+
+ /* NOTE 게시글 내용 section */
+.post-section-content label:first-child {
+    margin-top: 26px;
+    margin-bottom: 16px;
+}
+
+#txt_title, #txt_content, #img_upload {
+    width: 100%;
+    max-width: 570px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #F4F5F7;
+    color: #838486;
+    border: none;
+    margin-top: 10px;
+}
+
+/* NOTE : 게시글 helper 내용 */
+.helper-text {
+    color: #d9534f;
+    margin-top: 5px;
+    height: 64px;
+
+    font-family: Inter;
+    font-size: 12px;
+    line-height: 14.52px;
+    text-align: left;
+
+}
+
+/* NOTE : 게시글 이미지 업로드 section */
+.post-section-image{
+    margin-top: 11px;
+}
+
+/* NOTE : 게시글 수정 버튼 */
+#btn_board_update {
+    max-width: 570px;
+    width: 355px; 
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #ACA0EB;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0
+}
+
+/* helper text */
+#p_content_helper {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    text-align: left;
+
+    color: #d9534f;
+    margin-bottom: 3px;
+}
+
+.hr-line-middle {
+    width: 592px;
+    height: 0px;
+    left: 664px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+}

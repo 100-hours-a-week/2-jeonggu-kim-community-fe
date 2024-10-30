@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원정보 수정</title>
+    <link rel="stylesheet" href="/css/user/userEdit.css">
+    <link rel="stylesheet" href="/css/common/common.css">
+    <link rel="stylesheet" href="/css/common/header.css">
+</head>
+<body>
+    <!-- NOTE : header -->
+    <header class="header">
+        <h2>아무 말 대잔치</h2>
+        <!-- NOTE : profile menu -->
+        <div class="profile-container">
+            <div class="profile-icon">😊</div>
+            <div class="profile-menu">
+                <button class="text-center" id="btn_profile_menu">회원정보수정</button>
+                <button class="text-center" id="btn_pwd_menu">비밀번호수정</button>
+                <button class="text-center" id="btn_logout_menu">로그아웃</button>
+            </div>
+        </div>
+    </header>
+    <hr class="full-width-line">
+    <!-- NOTE : main -->
+    <main id="width-355">
+        <!-- NOTE : 회원정보 수정 section -->
+        <div class="section" id="div_profile_section">
+            <h2 class="text-center">회원정보수정</h2>
+            <div id="div_profile_title">
+                <p>프로필 사진</p>
+            </div>
+            <div class="text-center" id="div_profile_img">
+                <img src="images/default_profile.png" alt="프로필 사진" class="img_profile">
+                <span class="profile-text">변경</span>
+            </div>
+            <form>
+                <label class="left-sort" for="txt_email">이메일</label>
+                <input type="email" class="input-field" id="txt_email" value="startupcode@gmail.com" readonly>
+                <label class="left-sort" for="txt_nickname"> 닉네임</label>
+                <input type="text" class="input-field" id="txt_nickname" placeholder="닉네임을 입력하세요" value="스타트업코드">
+                <p class="p_content_helper" id="p_content_helper">* helper text</p>
+                <button type="submit" class="defult-button" id="btn_info_edit">수정하기</button>
+            </form>
+            <p class="default-link text-center"><a href="/register">회원탈퇴</a></p>
+            <div class="text-center">
+                <button class="input-edit-button" id="btn_info_update">수정완료</button>
+            </div>
+        </div>
+        <!-- NOTE : 비밀번호 수정 section -->
+        <div class="section" id="div_pwd_update" style="display: none;">
+            <h2 class="text-center">비밀번호 수정</h2>
+            <form id="pwdForm">
+                <label class="left-sort label-title" for="txt_pwd">비밀번호</label>
+                <input type="password" class="input-field" id="txt_pwd" placeholder="비밀번호를 입력하세요">
+                <p class="p_content_helper">* helper text</p>
+                <label class="left-sort label-title" for="txt_pwd_chk">비밀번호 확인</label>
+                <input type="password" class="input-field" id="txt_pwd_chk" placeholder="비밀번호를 한번 더 입력하세요">
+                <p class="p_content_helper">* helper text</p>
+                <button type="submit" class="defult-button" id="btn_pwd_update">수정하기</button>
+            </form>
+        </div>
+        <!-- NOTE : 팝업 -->
+        <div id="popup" class="popup">
+            <p>회원탈퇴 하시겠습니까?</p>
+            <span>작성된 게시글과 댓글은 삭제됩니다.</span>
+            <button class="popup-cancel-button" onclick="closePopup()">취소</button>
+            <button class="popup-confirm-button" onclick="confirmDelete()">확인</button>
+        </div>
+    </main>
+    <script src="/js/user/userEdit.js"></script>
+</body>
+</html>
