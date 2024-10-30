@@ -1,0 +1,188 @@
+.left-sort {
+    display: flex; 
+    justify-content: flex-start;
+}
+.default-button {
+    background-color: #b3a0ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.back-button {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: black;
+    margin-right: 20px;
+}
+.default-link {
+    margin-top: 15px;
+    font-size: 0.875rem;
+    color: black;
+}
+.default-link a {
+    text-decoration: none;
+}
+.default-link a:hover {
+    text-decoration: underline;
+    color: #8a8df5;
+}
+.helper-text {
+    width: 100%;
+    font-size: 0.875rem;
+    color: red;
+    text-align: left;
+    margin-top: 5px;
+}
+.full-width-line {
+    width: calc(100% + 30px);
+    margin: 0 -15px;
+    
+    margin-top: 15px;
+
+    gap: 0px;
+    border: 0px 0px 1px 0px;
+    opacity: 0px;
+
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+main {
+    margin: 0 auto;
+}
+.width-595 {
+    max-width: 595px;
+    width: 100%; 
+}
+.width-355 {
+    max-width: 355px;
+    width: 100%;
+}
+.width-570 {
+    max-width: 570px;
+    width: 100%;
+}
+.radius-15px-small-button {
+    width: 150px;
+    border-radius: 15px;
+}
+.right-sort {
+    margin-left: auto;
+}
+.content-line {
+    width: 592px;
+    height: 0px;
+    top: 653px;
+    left: 664px;
+    gap: 0px;
+    opacity: 0px;
+    margin-left: -10px;
+    border: 1px solid #00000029
+}
+.text-center {
+    text-align: center;
+}
+.p_content_helper{
+    color: #d9534f;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    text-align: left;
+}
+.content_helper-margin {
+    margin-top: 3px;
+    margin-bottom: 11px;
+
+}
+.back-icon {
+    Height : 18.89px;
+    gap: 0px;
+    opacity: 0px;
+}
+
+/* NOTE : 전체 화면을 덮는 반투명 배경 */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+/* NOTE : 팝업 창 */
+.popup {
+    background-color: #fff;
+    width: 300px;
+    text-align: center;
+    
+    padding-top: 48px;
+    width: 408px;
+    height: 242px;
+    top: 2682px;
+    left: -9717px;
+    gap: 0px;
+    border-radius: 12px;
+    opacity: 0px;
+}
+.popup p {
+    /* font-family: Pretendard; */
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28.64px;
+    text-align: center;
+    
+}
+.popup span {
+    margin-top: 24px;
+    color: #555;
+    margin-bottom: 20px;
+    display: block;
+
+    /* font-family: Pretendard; */
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23.87px;
+    text-align: center;
+
+}
+.popup button {
+    padding: 8px 0;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 10px 4px;
+
+    width: 127px;
+    height: 44px;
+    gap: 0px;
+    border-radius: 12px;
+    opacity: 0px;
+
+}
+.popup-cancel-button {
+    background-color: #242424;
+    color: #fff;
+}
+.popup-confirm-button {
+    background-color: #c6a3ff;
+    color: black;
+}

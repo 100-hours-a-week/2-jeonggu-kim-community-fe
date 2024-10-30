@@ -1,0 +1,294 @@
+.board-header {
+    display: flex;
+    flex-direction: column; /* 제목은 위에, 나머지는 아래에 */
+    padding-top:24px;
+    width: 544px;
+}
+
+.board-title {
+    font-size: 24px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.meta-actions {
+    display: flex; /* 한 줄에 배치 */
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 10px; /* meta와 actions 사이의 간격 */
+    margin-top: 12px;
+    margin-bottom: 24px;
+    /* justify-content: space-between; */
+}
+
+.board-meta {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    gap: 5px; /* 작성자와 날짜 사이의 간격 */
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.board-actions {
+    gap: 5px; /* 수정 및 삭제 버튼 사이의 간격 */
+    margin-left: auto;
+}
+
+.board-actions button {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.board-actions button:hover {
+    background-color: #eee;
+}
+
+/* 게시글 내용 */
+.board-content {
+    border-radius: 8px;
+    line-height: 1.6;
+    width: 544px;
+    height: 306px;
+    padding-top: 24px;
+}
+
+/* 통계 정보 */
+.board-stats {
+    display: flex;
+    gap: 12px;
+    border-radius: 10px;
+    justify-content: center; 
+}
+
+.stat-item {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px;
+    background-color: #ddd;
+    border-radius: 20px;
+    width: 116px;
+    height: 77px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 댓글 작성 */
+.comment-section {
+    width: 100%;
+    max-width: 595px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-top: 33px;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: flex-end; /* 버튼을 오른쪽 정렬 */
+}
+
+
+.comment-input {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    resize: none;
+}
+
+#btn_comment_add {
+    height: 39px;
+    padding: 10px 20px;
+    background-color: #ACA0EB;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    width: 138px;
+    margin: 8px;
+}
+
+/* 댓글 리스트 */
+.comment-list {
+    border-radius: 8px;
+}
+
+.comment-list > div:first-child {
+    margin-top: 21px;
+}
+
+/* 이후 div 요소에 margin-top 16px */
+.comment-list > div:not(:first-child) {
+    margin-top: 16px;
+}
+
+.comment {
+    position: relative;
+    margin-top: 21px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-actions {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    display: flex;
+    gap: 5px;
+}
+
+.comment-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.comment-text {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #333;
+    margin-left: 46px;
+}
+
+.edit-comment,
+.delete-comment {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-comment:hover,
+.delete-comment:hover {
+    background-color: #eee;
+}
+
+/* 모달 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.modal p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.confirm-delete,
+.cancel-delete {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.confirm-delete {
+    background-color: #e74c3c;
+    color: #ffff;
+}
+
+.cancel-delete {
+    background-color: #ccc;
+    color: #fff;
+}
+
+.confirm-delete:hover {
+    background-color: #c0392b;
+}
+
+.cancel-delete:hover {
+    background-color: #b3b3b3;
+}
+
+.img_profile {
+    width: 36px;
+    height: 36px;
+    background-color: #b3b3b3;
+    border-radius: 50%;
+    font-size: 15px;
+}
+
+.board-date {
+    width: 133px;
+    gap: 0px;
+    font-size: 14px;
+    margin-left: 24px;
+}
+
+.board-button {
+    width: 50px;
+    height: 27px;
+    top: 175px;
+    left: 1124px;
+    padding: 2px 12px 2px 12px;
+    gap: 0px;
+    border-radius: 8px;
+    opacity: 0px;
+    border: 1px solid #ACA0EB
+}
+
+.item-cnt {
+    font-size: 20px;
+}
+.item-text {
+    font-size: 16px;
+}
+
+.hr-line {
+    width: 592px;
+    height: 0px;
+    border: 1px;
+    opacity: 0px;
+    border: 1px solid #00000029
+}
+.hr-line-middle {
+    width: 592px;
+    height: 0px;
+    left: 664px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+}
+
+.section-center {
+    width: 100%;
+    max-width: 544px;
+    margin: auto;
+}
+#hr_board_comment{
+    margin-top: 31px;
+}
+.comment-date {
+    margin-left: 24px;
+}

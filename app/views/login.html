@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - AvoWorld</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/common.css">
+</head>
+<body>
+    <!-- NOTE : header -->
+    <header class="header">
+        <h2>아무 말 대잔치</h2>
+    </header>
+    <hr class="full-width-line">
+    <!-- NOTE : main -->
+    <main class="width-355">
+        <div class="login-container">
+            <h2 id="h2_login_title"style="font-size: 32px;">로그인</h2>
+            <form id="loginForm" action="/login" method="POST">
+                <label for="email">이메일:</label>
+                <input type="email" id="txt_email" name="email" required>
+                <label for="password">비밀번호:</label>
+                <input type="password" id="txt_pwd" name="password" required>
+                <p class="helper-text" id="p_helper_text">* 솔직히 이해가 안되는데 이게 맞나?</p>
+                <button class="default-button" id="btn_login" type="submit">로그인</button>
+            </form>
+            <p class="default-link"><a href="/register">회원가입</a></p>
+        </div>
+    </main>
+    <script src="/js/login.js"></script>
+</body>
+</html>
