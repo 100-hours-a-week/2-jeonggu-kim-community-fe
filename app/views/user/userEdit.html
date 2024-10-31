@@ -11,11 +11,12 @@
 <body>
     <!-- NOTE : header -->
     <header class="header">
+        <div><img class="back-icon" src="/images/back_icon.png"></div>
         <h2>아무 말 대잔치</h2>
         <!-- NOTE : profile menu -->
         <div class="profile-container">
             <div class="profile-icon">😊</div>
-            <div class="profile-menu">
+            <div class="profile-menu" css="display:none;">
                 <button class="text-center" id="btn_profile_menu">회원정보수정</button>
                 <button class="text-center" id="btn_pwd_menu">비밀번호수정</button>
                 <button class="text-center" id="btn_logout_menu">로그아웃</button>
@@ -43,13 +44,13 @@
                 <p class="p_content_helper" id="p_content_helper">* helper text</p>
                 <button type="submit" class="defult-button" id="btn_info_edit">수정하기</button>
             </form>
-            <p class="default-link text-center"><a href="/register">회원탈퇴</a></p>
+            <p class="default-link text-center"><a id="a_user_delete" href="/register">회원탈퇴</a></p>
             <div class="text-center">
                 <button class="input-edit-button" id="btn_info_update">수정완료</button>
             </div>
         </div>
         <!-- NOTE : 비밀번호 수정 section -->
-        <div class="section" id="div_pwd_update" style="display: none;">
+        <div class="section" id="div_pwd_update">
             <h2 class="text-center">비밀번호 수정</h2>
             <form id="pwdForm">
                 <label class="left-sort label-title" for="txt_pwd">비밀번호</label>
@@ -62,13 +63,14 @@
             </form>
         </div>
         <!-- NOTE : 팝업 -->
-        <div id="popup" class="popup">
+        <div class="popup" id="div_user_popup" style="display:none">
             <p>회원탈퇴 하시겠습니까?</p>
             <span>작성된 게시글과 댓글은 삭제됩니다.</span>
-            <button class="popup-cancel-button" onclick="closePopup()">취소</button>
-            <button class="popup-confirm-button" onclick="confirmDelete()">확인</button>
+            <button class="popup-cancel-button" onclick="closeUserPopup()">취소</button>
+            <button class="popup-confirm-button" onclick="confirmUserDelete()">확인</button>
         </div>
     </main>
     <script src="/js/user/userEdit.js"></script>
+    <script src="/js/common/common.js"></script>
 </body>
 </html>

@@ -94,33 +94,6 @@
     display: inline-block;
     right: -75px;
 }
-.profile-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #D9D9D9;
-    z-index: 1;
-
-    width: 115px;
-    height: 105px;
-    gap: 0px;
-    opacity: 0px;
-
-}
-.profile-menu button {
-    display: block;
-    width: 115px;
-    height: 35px;
-    padding: 10px 24px 10px 24px;
-    gap: 8px;
-    opacity: 0px;
-    font-size: 11px;
-    color:black;
-    border: none;
-}
-.profile-icon:hover{
-    display: block;
-}
 form label {
     font-weight: bold;
 }

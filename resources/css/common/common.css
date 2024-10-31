@@ -137,11 +137,16 @@ main {
     padding-top: 48px;
     width: 408px;
     height: 242px;
-    top: 2682px;
-    left: -9717px;
     gap: 0px;
     border-radius: 12px;
     opacity: 0px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 1000; 
 }
 .popup p {
     /* font-family: Pretendard; */
@@ -185,4 +190,32 @@ main {
 .popup-confirm-button {
     background-color: #c6a3ff;
     color: black;
+}
+/* NOTE : 프로필 메뉴 */
+.profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #D9D9D9;
+    z-index: 1;
+
+    width: 115px;
+    height: 105px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+.profile-menu button {
+    display: block;
+    width: 115px;
+    height: 35px;
+    padding: 10px 24px 10px 24px;
+    gap: 8px;
+    opacity: 0px;
+    font-size: 11px;
+    color:black;
+    border: none;
+}
+.profile-icon:hover{
+    display: block;
 }
