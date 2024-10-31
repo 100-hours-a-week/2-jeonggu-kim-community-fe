@@ -10,10 +10,23 @@
 </head>
 <body>
     <!-- NOTE : header -->
-    <header class="header">
+    <!-- <header class="header">
         <div><img class="back-icon" src="/images/back_icon.png"></div>
         <h2>아무 말 대잔치</h2>
         <div class="profile-icon">😊</div>
+    </header> -->
+    <header class="header">
+        <div><img class="back-icon" src="/images/back_icon.png"></div>
+        <h2>아무 말 대잔치</h2>
+        <!-- NOTE : profile menu -->
+        <div class="profile-container">
+            <div class="profile-icon">😊</div>
+            <div class="profile-menu" style="display:none;">
+                <button class="text-center" id="btn_profile_menu">회원정보수정</button>
+                <button class="text-center" id="btn_pwd_menu">비밀번호수정</button>
+                <button class="text-center" id="btn_logout_menu">로그아웃</button>
+            </div>
+        </div>
     </header>
     <hr class="full-width-line">
     <!--NOTE : main -->
@@ -31,7 +44,7 @@
                 </div>
                 <div class="board-actions">
                     <button class="board-button" id="btn_edit">수정</button>
-                    <button class="board-button" id="btn_delete">삭제</button>
+                    <button class="board-button" id="btn_delete" onclick="openBoardPopup()">삭제</button>
                 </div>
             </div>
         </section>
@@ -65,7 +78,7 @@
             <div class="comment">
                 <div class="comment-actions">
                     <button class="edit-comment">수정</button>
-                    <button class="delete-comment">삭제</button>
+                    <button class="delete-comment" onclick="openCommentPopup()">삭제</button>
                 </div>
                 <div class="comment-info">
                     <img class="img_profile"></img>
@@ -79,7 +92,7 @@
             <div class="comment">
                 <div class="comment-actions">
                     <button class="edit-comment">수정</button>
-                    <button class="delete-comment">삭제</button>
+                    <button class="delete-comment" onclick="openCommentPopup()">삭제</button>
                 </div>
                 <div class="comment-info">
                     <img class="img_profile"></img>
@@ -91,7 +104,7 @@
             <div class="comment">
                 <div class="comment-actions">
                     <button class="edit-comment">수정</button>
-                    <button class="delete-comment">삭제</button>
+                    <button class="delete-comment" onclick="openCommentPopup()">삭제</button>
                 </div>
                 <div class="comment-info">
                     <img class="img_profile"></img>
@@ -112,18 +125,21 @@
         </div>
     </div>
     <!-- NOTE : 게시글 삭제 팝업 -->
-    <div id="popup" class="popup">
+    <div class="popup" id="div_board_popup" style="display:none;">
         <p>게시글을 하시겠습니까?</p>
         <span>삭제된 내용은 복구 할 수 없습니다.</span>
-        <button class="popup-cancel-button" onclick="closePopup()">취소</button>
-        <button class="popup-confirm-button" onclick="confirmDelete()">확인</button>
+        <button class="popup-cancel-button" onclick="closeBoardPopup()">취소</button>
+        <button class="popup-confirm-button" onclick="confirmBoardDelete()">확인</button>
     </div>
     <!-- NOTE : 댓글 삭제 팝업 -->
-    <div id="popup" class="popup">
+    <div class="popup" id="div_comment_popup" style="display:none;">
         <p>댓글을 하시겠습니까?</p>
         <span>삭제된 내용은 복구 할 수 없습니다.</span>
-        <button class="popup-cancel-button" onclick="closePopup()">취소</button>
-        <button class="popup-confirm-button" onclick="confirmDelete()">확인</button>
+        <button class="popup-cancel-button" onclick="closeCommentPopup()">취소</button>
+        <button class="popup-confirm-button" onclick="confirmCommentDelete()">확인</button>
     </div>
+
+    <script src="/js/common/common.js"></script>
+    <script src="/js/board/boardInfo.js"></script>
 </body>
 </html>

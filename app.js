@@ -26,6 +26,13 @@ app.get('/board', (req, res) => {
 app.get('/boardInfo', (req, res) => {
     res.sendFile(path.join(__dirname, 'app/views/board/boardInfo.html'));
 });
+app.get('/boardInfo', (req, res) => {
+    const boardNo = req.query.boardNo;
+    console.log(`Requested Board Number: ${boardNo}`); // NOTE : boardNo 확인
+
+    res.sendFile(path.join(__dirname, 'app/views/board/boardInfo.html'));
+});
+
 // NOTE : 게시판 수정
 app.get('/boardEdit', (req, res) => {
     res.sendFile(path.join(__dirname, 'app/views/board/boardEdit.html'));

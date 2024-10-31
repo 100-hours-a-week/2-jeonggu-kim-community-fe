@@ -13,7 +13,6 @@
     display: flex;
     justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
     margin-bottom: 20px;
-    width: 600px;
 }
 .write-board-button {
     background-color: #ACA0EB;
