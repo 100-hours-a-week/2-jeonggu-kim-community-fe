@@ -9,12 +9,6 @@
     <link rel="stylesheet" href="/css/board/boardInfo.css">
 </head>
 <body>
-    <!-- NOTE : header -->
-    <!-- <header class="header">
-        <div><img class="back-icon" src="/images/back_icon.png"></div>
-        <h2>아무 말 대잔치</h2>
-        <div class="profile-icon">😊</div>
-    </header> -->
     <header class="header">
         <div><img class="back-icon" src="/images/back_icon.png"></div>
         <h2>아무 말 대잔치</h2>
@@ -32,19 +26,19 @@
     <!--NOTE : main -->
     <main>
         <!-- NOTE : board-header section 게시글 제목-->
-        <section class="board-header section-center">
+        <section class="board-header section-center" id="section_board">
             <div class="title-section">
-                <h2 class="board-title">제목 1</h2>
+                <h2 class="board-title" id="h2_section_title"></h2>
             </div>
             <div class="meta-actions">
-                <img class="img_profile"></img>
+                <img class="img_profile" id="img_profile_url"></img>
                 <div class="board-meta">
-                    <span>더미 작성자 1</span>
-                    <span class="board-date">2021-01-01 00:00:00</span>
+                    <span id ="span_board_author"></span>
+                    <span class="board-date" id="span_board_dt"></span>
                 </div>
-                <div class="board-actions">
+                <div class="board-actions" id="div_board_button" style="display:none;">
                     <button class="board-button" id="btn_edit">수정</button>
-                    <button class="board-button" id="btn_delete" onclick="openBoardPopup()">삭제</button>
+                    <button class="board-button" id="btn_delete">삭제</button>
                 </div>
             </div>
         </section>
@@ -52,17 +46,15 @@
         <!-- NOTE : board-content section 게시글 내용 -->
         <section class="board-content section-center">
             <!-- NOTE : 이미지 태그가 있으면 inert 추가하기 -->
-            <p>
-                게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...게시글 내용이 여기에 표시됩니다...
-
-            </p>
+            <img id="img_url">
+            <p id="p_board_content"></p>
         </section>
 
         <!-- NOTE : board stats section 조회수, 좋아요수, 댓글수 -->
         <section class="board-stats section-center">
-            <div class="stat-item"><span class="item-cnt">123</span><span class="item-text">좋아요수</span></div>
-            <div class="stat-item"><span class="item-cnt">123</span><span class="item-text">조회수</span></div>
-            <div class="stat-item"><span class="item-cnt">123</span><span class="item-text">댓글수</span></div>
+            <div class="stat-item" id="div_like_cnt"><span class="item-cnt" id="span_like_cnt"></span><span class="item-text">좋아요수</span></div>
+            <div class="stat-item"><span class="item-cnt" id="span_view_cnt"></span><span class="item-text">조회수</span></div>
+            <div class="stat-item"><span class="item-cnt" id="span_comment_cnt"></span><span class="item-text">댓글수</span></div>
         </section>
 
         <hr class="hr-line-middle" id="hr_board_comment">
@@ -74,46 +66,6 @@
         </section>
         <!-- NOTE : board-comment-list section 댓글 리스트 -->
         <section class="comment-list section-center">
-            <!-- NOTE : comment 내용 START -->
-            <div class="comment">
-                <div class="comment-actions">
-                    <button class="edit-comment">수정</button>
-                    <button class="delete-comment" onclick="openCommentPopup()">삭제</button>
-                </div>
-                <div class="comment-info">
-                    <img class="img_profile"></img>
-                    <span class="comment-author">더미 작성자 1</span>
-                    <span class="comment-date">2021-01-01 00:00:00</span>
-                </div>
-                <p class="comment-text">댓글 내용</p>
-            </div>
-            <!-- NOTE : comment 내용 END -->
-            <!-- NOTE : comment 더미 데이터 추후에 지워질 태그들 START -->
-            <div class="comment">
-                <div class="comment-actions">
-                    <button class="edit-comment">수정</button>
-                    <button class="delete-comment" onclick="openCommentPopup()">삭제</button>
-                </div>
-                <div class="comment-info">
-                    <img class="img_profile"></img>
-                    <span class="comment-author">더미 작성자 1</span>
-                    <span class="comment-date">2021-01-01 00:00:00</span>
-                </div>
-                <p class="comment-text">댓글 내용</p>
-            </div>
-            <div class="comment">
-                <div class="comment-actions">
-                    <button class="edit-comment">수정</button>
-                    <button class="delete-comment" onclick="openCommentPopup()">삭제</button>
-                </div>
-                <div class="comment-info">
-                    <img class="img_profile"></img>
-                    <span class="comment-author">더미 작성자 1</span>
-                    <span class="comment-date">2021-01-01 00:00:00</span>
-                </div>
-                <p class="comment-text">댓글 내용</p>
-            </div>
-            <!-- NOTE : comment 더미 데이터 추후에 지워질 태그들 END -->
         </section>
     </main>
     <!-- NOTE : 수정/삭제 버튼 -->
@@ -126,20 +78,19 @@
     </div>
     <!-- NOTE : 게시글 삭제 팝업 -->
     <div class="popup" id="div_board_popup" style="display:none;">
-        <p>게시글을 하시겠습니까?</p>
+        <p>게시글을 삭제하시겠습니까?</p>
         <span>삭제된 내용은 복구 할 수 없습니다.</span>
-        <button class="popup-cancel-button" onclick="closeBoardPopup()">취소</button>
-        <button class="popup-confirm-button" onclick="confirmBoardDelete()">확인</button>
+        <button class="popup-cancel-button" id="btn_board_cancel">취소</button>
+        <button class="popup-confirm-button" id="btn_board_confirm">확인</button>
     </div>
     <!-- NOTE : 댓글 삭제 팝업 -->
     <div class="popup" id="div_comment_popup" style="display:none;">
-        <p>댓글을 하시겠습니까?</p>
+        <p>댓글을 삭제하시겠습니까?</p>
         <span>삭제된 내용은 복구 할 수 없습니다.</span>
-        <button class="popup-cancel-button" onclick="closeCommentPopup()">취소</button>
-        <button class="popup-confirm-button" onclick="confirmCommentDelete()">확인</button>
+        <button class="popup-cancel-button" id="btn_comment_cancel">취소</button>
+        <button class="popup-confirm-button" id="btn_comment_confirm">확인</button>
     </div>
-
-    <script src="/js/common/common.js"></script>
-    <script src="/js/board/boardInfo.js"></script>
+    <script src="/js/common/common.js" type="module"></script>
+    <script src="/js/board/boardInfo.js" type="module"></script>
 </body>
 </html>

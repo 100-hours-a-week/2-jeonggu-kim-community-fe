@@ -65,6 +65,9 @@
     align-items: center;
     justify-content: center;
 }
+#div_pwd_update {
+    margin-top: 94px;
+}
 .profile-text {
     position: absolute;
     color: white; 
@@ -86,17 +89,15 @@
     margin-top: 12px;
     margin-bottom: 12px;
 }
-#pwdForm {
+/* #pwdForm {
     margin-top: 94px;
-}
+} */
 .profile-container {
     position: absolute;
     display: inline-block;
     right: -75px;
 }
-form label {
-    font-weight: bold;
-}
+
 #txt_nickname{
     margin-top: 6px;
 }
@@ -110,6 +111,10 @@ form label {
 .p_content_helper {
     margin-top: 4px;
     margin-bottom: 4px;
+    display: block;
+    word-wrap: break-word; 
+    margin-top: 5px; 
+    max-width: 355px;
 }
 .label-title{
     margin-bottom: 8px;

@@ -124,3 +124,33 @@
     border: 1px 0px 0px 0px;
     opacity: 0px;
 }
+
+
+.file-upload-container {
+    display: flex;
+    align-items: center;
+}
+
+.file-upload-label {
+    display: inline-block;
+    padding: 1px 6px;
+    width: 72.6;
+    height: 23.33;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 0px,4px,0px,0px;
+    margin-right: 10px;
+    font-size: 14px;
+    margin-top:8px;
+}
+
+#lbl_file_upload{
+    font-weight: normal;
+}
+
+#file-name-display {
+    color: #666;
+    margin-top:8px;
+}
