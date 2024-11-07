@@ -24,7 +24,7 @@
                 <div class="profile-picture">
                     <label for="p_profile">프로필 사진</label>
                     <p class="register-helper-text left-sort" id="p_profile">* 프로필 사진을 선택해 주세요</p>
-                    <input type="file" id="file_profile_url" name="profile_url" accept="image/*" style="display:none;">
+                    <input type="file" id="img_profile" name="profile" accept="image/*" style="display:none;">
                     <div class="profile-icon" id="div_profile">+</div>
                 </div>
                 
@@ -42,7 +42,7 @@
 
                 <label for="nickname">닉네임*</label>
                 <input type="text" id="txt_nickname" name="nickname" placeholder="닉네임을 입력하세요" required>
-                <p class="register-helper-text left-sort" id="p_nickname">* 닉네임을 입력해 주세요.</p>
+                <p class="register-helper-text left-sort" id="p_nickname-">* 닉네임을 입력해 주세요.</p>
 
                 <button class="default-button" id="btn_register" type="submit">회원가입</button>
             </form>
@@ -50,7 +50,7 @@
             <p class="default-link"><a href="/login">로그인하러 가기</a></p>
         </div>
     </main>
-    <script src="/js/user/register.js" type="module"></script>
-    <script src="/js/common/common.js" type="module"></script>
+    <script src="/js/register.js"></script>
+    <script src="/js/common/common.js"></script>
 </body>
 </html>

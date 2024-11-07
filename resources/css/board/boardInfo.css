@@ -17,7 +17,6 @@
     gap: 10px; /* meta와 actions 사이의 간격 */
     margin-top: 12px;
     margin-bottom: 24px;
-    /* justify-content: space-between; */
 }
 
 .board-meta {
@@ -26,7 +25,7 @@
     margin-left: 10px;
     gap: 5px; /* 작성자와 날짜 사이의 간격 */
     color: #666;
-    font-size: 0.9rem;
+    font-size: 14px;
 }
 
 .board-actions {
@@ -51,8 +50,15 @@
     border-radius: 8px;
     line-height: 1.6;
     width: 544px;
-    height: 306px;
     padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+#img_url {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 24px; /* 이미지와 텍스트 사이 간격 */
 }
 
 /* 통계 정보 */
@@ -161,6 +167,7 @@
     margin-left: 46px;
 }
 
+.save-comment,
 .edit-comment,
 .delete-comment {
     font-size: 0.8rem;

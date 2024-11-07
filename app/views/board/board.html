@@ -9,11 +9,6 @@
     <link rel="stylesheet" href="/css/common/header.css">
 </head>
 <body>
-    <!-- NOTE : header -->
-    <!-- <header class="header">
-        <h2>아무 말 대잔치</h2>
-        <div class="profile-icon">😊</div>
-    </header> -->
     <header class="header">
         <div><img class="back-icon" src="/images/back_icon.png"></div>
         <h2>아무 말 대잔치</h2>
@@ -37,41 +32,9 @@
         <!-- NOTE : board section -->
         <section class="board-list">
             <!-- NOTE : 추후에 각각의 게시글 관리하기 위해 data-boardNo 추가-->
-            <!-- NOTE : 게시글 반복 START -->
-            <article class="board" data-boardNo="1">
-                <h2 class="board-title">제목 1</h2>
-                <div class="board-meta">
-                    <span>좋아요 0</span>
-                    <span>댓글 0</span>
-                    <span>조회수 0</span>
-                    <span class="board-date">2021-01-01 00:00:00</span>
-                </div>
-                <hr class="full-width-line">
-                <div class="board-author">
-                    <div class="author-icon">👤</div>
-                    <span>더미 작성자 1</span>
-                </div>
-            </article>
-            <!-- NOTE : 게시글 반복 END -->
-            <!-- NOTE : 게시글이 반복 더미 데이터로 추후에 제거 START -->
-            <article class="board" data-boardNo="2">
-                <h2 class="board-title">제목 1</h2>
-                <div class="board-meta">
-                    <span>좋아요 0</span>
-                    <span>댓글 0</span>
-                    <span>조회수 0</span>
-                    <span class="board-date">2021-01-01 00:00:00</span>
-                </div>
-                <hr class="full-width-line">
-                <div class="board-author">
-                    <div class="author-icon">👤</div>
-                    <span>더미 작성자 1</span>
-                </div>
-            </article>
-            <!-- NOTE : 게시글이 반복 더미 데이터로 추후에 제거 END -->
         </section>
     </main>
-    <script src="/js/board/board.js"></script>
-    <script src="/js/common/common.js"></script>
+    <script src="/js/board/board.js" type="module"></script>
+    <script src="/js/common/common.js" type="module"></script>
 </body>
 </html>

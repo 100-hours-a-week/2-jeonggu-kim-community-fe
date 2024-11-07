@@ -33,44 +33,41 @@
                 <p>프로필 사진</p>
             </div>
             <div class="text-center" id="div_profile_img">
-                <img src="images/default_profile.png" alt="프로필 사진" class="img_profile">
+                <input type="file" id="file_profile_url" accept="image/*" style="display:none;">
+                <img src="" alt="프로필 사진" class="img_profile" id="img_profile_url">
                 <span class="profile-text">변경</span>
             </div>
-            <form>
-                <label class="left-sort" for="txt_email">이메일</label>
-                <input type="email" class="input-field" id="txt_email" value="startupcode@gmail.com" readonly>
-                <label class="left-sort" for="txt_nickname"> 닉네임</label>
-                <input type="text" class="input-field" id="txt_nickname" placeholder="닉네임을 입력하세요" value="스타트업코드">
-                <p class="p_content_helper" id="p_content_helper">* helper text</p>
-                <button type="submit" class="defult-button" id="btn_info_edit">수정하기</button>
-            </form>
-            <p class="default-link text-center"><a id="a_user_delete" href="/register">회원탈퇴</a></p>
+            <label class="left-sort" for="txt_email">이메일</label>
+            <input type="email" class="input-field" id="txt_email" readonly>
+            <label class="left-sort" for="txt_nickname"> 닉네임</label>
+            <input type="text" class="input-field" id="txt_nickname" placeholder="닉네임을 입력하세요">
+            <p class="p_content_helper" id="p_content_helper"></p>
+            <button type="submit" class="defult-button" id="btn_info_edit">수정하기</button>
+            <p class="default-link text-center"><a id="a_user_delete">회원탈퇴</a></p>
             <div class="text-center">
-                <button class="input-edit-button" id="btn_info_update">수정완료</button>
+                <button class="input-edit-button" id="btn_info_update" style="display: none;">수정완료</button>
             </div>
         </div>
         <!-- NOTE : 비밀번호 수정 section -->
         <div class="section" id="div_pwd_update">
             <h2 class="text-center">비밀번호 수정</h2>
-            <form id="pwdForm">
                 <label class="left-sort label-title" for="txt_pwd">비밀번호</label>
                 <input type="password" class="input-field" id="txt_pwd" placeholder="비밀번호를 입력하세요">
-                <p class="p_content_helper">* helper text</p>
-                <label class="left-sort label-title" for="txt_pwd_chk">비밀번호 확인</label>
-                <input type="password" class="input-field" id="txt_pwd_chk" placeholder="비밀번호를 한번 더 입력하세요">
-                <p class="p_content_helper">* helper text</p>
+                <p class="p_content_helper" id="p_pwd"></p>
+                <label class="left-sort label-title" for="txt_confirm_pwd">비밀번호 확인</label>
+                <input type="password" class="input-field" id="txt_confirm_pwd" placeholder="비밀번호를 한번 더 입력하세요">
+                <p class="p_content_helper" id="p_confirm_pwd"></p>
                 <button type="submit" class="defult-button" id="btn_pwd_update">수정하기</button>
-            </form>
         </div>
         <!-- NOTE : 팝업 -->
         <div class="popup" id="div_user_popup" style="display:none">
             <p>회원탈퇴 하시겠습니까?</p>
             <span>작성된 게시글과 댓글은 삭제됩니다.</span>
-            <button class="popup-cancel-button" onclick="closeUserPopup()">취소</button>
-            <button class="popup-confirm-button" onclick="confirmUserDelete()">확인</button>
+            <button class="popup-cancel-button" id="btn_user_cancel">취소</button>
+            <button class="popup-confirm-button" id="btn_user_confirm">확인</button>
         </div>
     </main>
-    <script src="/js/user/userEdit.js"></script>
-    <script src="/js/common/common.js"></script>
+    <script src="/js/user/userEdit.js" type="module"></script>
+    <script src="/js/common/common.js" type="module"></script>
 </body>
 </html>
