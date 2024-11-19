@@ -18,9 +18,9 @@ const renderBoardList = (boardList) => {
         boardArticle.innerHTML = `
             <h2 class="board-title">${post.title}</h2>
             <div class="board-meta">
-                <span>좋아요 ${post.likeCnt}</span>
-                <span>댓글 ${post.commentCnt}</span>
-                <span>조회수 ${post.viewCnt}</span>
+                <span>좋아요 ${post.like_cnt}</span>
+                <span>댓글 ${post.comment_cnt}</span>
+                <span>조회수 ${post.view_cnt}</span>
                 <span class="board-date">${formatDate(post.date)}</span>
             </div>
             <hr class="full-width-line">
@@ -54,10 +54,12 @@ const loadBoardList = async () => {
             renderBoardList(result.data); // NOTE : 성공 시 게시글 렌더링
         } else {
             alert('게시글 목록을 불러오는 데 실패했습니다.');
+            window.history.back();
         }
     } catch (error) {
         console.error('Error loading board list:', error);
         alert('서버 오류가 발생했습니다.');
+        window.history.back();
     }
 };
 

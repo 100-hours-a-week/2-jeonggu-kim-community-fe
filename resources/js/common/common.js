@@ -69,7 +69,6 @@ export const formatDate = (dateString) => {
 }
 
 // NOTE : 공통 파일 업로드 함수
-
 export const uploadImage = async (fileInput, uploadUrl, imageType) => {
     if (fileInput.files.length === 0) return { success: false, message: '파일이 없습니다.' }; // NOTE : 파일이 선택되지 않은 경우 종료
             
@@ -97,15 +96,4 @@ export const uploadImage = async (fileInput, uploadUrl, imageType) => {
         console.error('Error uploading image:', error);
         return { success: false, message: '서버 오류가 발생했습니다.' };
     }
-}
-
-export const checkAuthentication = async () => {
-    fetch('http://localhost:4444/auth/check')
-    .then(response => {
-        if (response.status === 401) {
-            alert('인증이 필요합니다.');
-            window.location.href = '/login';
-        }
-    })
-    .catch(error => console.error('Error checking authentication:', error));
 }
