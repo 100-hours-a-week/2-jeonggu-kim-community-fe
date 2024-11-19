@@ -75,6 +75,7 @@ input[type="text"] {
     margin-top: 10px;
 }
 #div_profile {
+    background-size: 149px;
     width: 149px;
     height: 149px;
     gap: 0px;

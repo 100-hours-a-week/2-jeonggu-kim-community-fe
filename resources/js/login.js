@@ -68,21 +68,21 @@ loginButton.addEventListener("click", async (event) => {
   // NOTE : 유효성 검사가 통과되었을 때만 처리
   if (!loginButton.disabled) {
     try {
-      const response = await fetch('/auth/login', {
+      const response = await fetch('http://localhost:4444/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password})
       });
 
       const result = await response.json();
-      if (result.data["success"]) {
+      if (response.status === 200 && result.data["success"]) {
+          localStorage.setItem("token", result.data.token);
           alert("로그인에 성공하였습니다.");
           window.location.href = '/board';
-      } else {
-          alert("로그인에 실패했습니다.");
+      } else{
+        alert("로그인에 실패했습니다.");
       }
     } catch (error) {
-        console.error(error);
         alert("서버 오류가 발생했습니다.");
     }
   }

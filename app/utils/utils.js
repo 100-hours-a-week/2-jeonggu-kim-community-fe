@@ -17,9 +17,7 @@ const getJsonData = async (filePath, key) => {
     try {
         // NOTE: 파일 읽기 시도
         const data = await fs.readFile(filePath, 'utf-8');
-        console.log(data)
         jsonData = JSON.parse(data);
-        console.log(jsonData)
     } catch (error) {
         // NOTE: 파일이 없거나 JSON 파싱 오류 시 초기화
         console.error("파일을 읽거나 JSON을 파싱하는 중 오류가 발생했습니다:", error);

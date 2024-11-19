@@ -4,6 +4,7 @@ const contentHelper = document.getElementById('p_content_helper');
 const titleInput = document.getElementById('txt_title');
 const contentInput = document.getElementById('txt_content');
 const editButton = document.getElementById('btn_board_update');
+const token = localStorage.getItem("token");
 
 // NOTE : 제목, 내용 입력 시 등록 버튼 활성화/비활성화 및 색상 변경
 const toggleButtonState = () => {
@@ -22,19 +23,24 @@ titleInput.addEventListener('blur', () => {
 
 contentInput.addEventListener('blur', toggleButtonState);
 
-const getBoardNoFromURL = () => new URLSearchParams(window.location.search).get('boardNo');
+const getboard_idFromURL = () => new URLSearchParams(window.location.search).get('board_id');
 
 // NOTE : 페이지 로드 시 게시글 정보 불러오기
 const loadBoardData = async () => {
-    const boardNo = getBoardNoFromURL();
-    if (!boardNo) {
+    const board_id = getboard_idFromURL();
+    if (!board_id) {
         alert('잘못된 접근입니다.');
         window.history.back();
         return;
     }
 
     try {
-        const response = await fetch(`/board/${boardNo}`);
+        const response = await fetch(`http://localhost:4444/boards/${board_id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         const result = await response.json();
             
         if (result.message === 'success' && result.data) {
@@ -54,18 +60,18 @@ const loadBoardData = async () => {
 const displayBoardData = (board) => {
     titleInput.value = board.title;
     contentInput.value = board.content;
-    document.getElementById('img_upload').setAttribute('data-image-url', board.imageFile || '');
-    document.getElementById('file-name-display').textContent = board.imageFileName || '선택된 파일 없음';
+    document.getElementById('img_upload').setAttribute('data-image-url', board.image_url || '');
+    document.getElementById('file-name-display').textContent = board.image_nm || '선택된 파일 없음';
     editButton.disabled = false; // NOTE : 수정 버튼 활성화
 };
 
 // NOTE : 수정 버튼 클릭 이벤트
 const handleUpdate = async () => {
-    const boardNo = getBoardNoFromURL();
-    const imageFileInput = document.getElementById('img_upload');
+    const board_id = getboard_idFromURL();
+    const image_urlInput = document.getElementById('img_upload');
     const title = titleInput.value;
     const content = contentInput.value;
-    const img_url = imageFileInput.getAttribute("data-image-url");
+    const img_url = image_urlInput.getAttribute("data-image-url");
 
     if (!title || !content) {
         alert('제목과 내용을 입력해주세요.');
@@ -75,23 +81,26 @@ const handleUpdate = async () => {
     const updatedData = {
         title,
         content,
-        ...(imageFileInput.files[0] && {
-            imageFile: img_url,
-            imageFileName: document.getElementById('file-name-display').textContent
+        ...(image_urlInput.files[0] && {
+            image_url: img_url,
+            image_nm: document.getElementById('file-name-display').textContent
         })
     };
 
     try {
-        const response = await fetch(`/board/${boardNo}`, {
+        const response = await fetch(`http://localhost:4444/boards/${board_id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json' ,
+                Authorization: `Bearer ${token}`
+            },
             body: JSON.stringify(updatedData)
         });
 
         const result = await response.json();
         if (response.ok) {
             alert('게시글이 수정되었습니다.');
-            window.location.href = `/boardInfo?boardNo=${boardNo}`;
+            window.location.href = `/boardInfo?board_id=${board_id}`;
         } else {
             alert(result.message || '게시글 수정에 실패했습니다.');
         }
@@ -105,10 +114,12 @@ const imgUploadElement = document.getElementById('img_upload');
 imgUploadElement.addEventListener('change', async () => {
     if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
             
-    const result = await uploadImage(imgUploadElement, '/board/image', "boardImage");
+    const result = await uploadImage(imgUploadElement, 'http://localhost:4444/boards/image', "boardImage");
 
     if (result.success) {
-        imgUploadElement.setAttribute('data-image-url', result.filePath);
+        const filePath = result.filePath.split('/').pop();
+        const imageUrl = `http://localhost:4444/boards/image/${filePath}`;
+        imgUploadElement.setAttribute('data-image-url', imageUrl);
         document.getElementById('file-name-display').textContent = imgUploadElement.files[0]["name"];
         alert(result.message);
     } else {

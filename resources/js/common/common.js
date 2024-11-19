@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnLogoutMenu) {
         // NOTE: 로그아웃 버튼 클릭 시 로그인 페이지로 이동
         btnLogoutMenu.addEventListener("click", () => {
+            localStorage.removeItem('token');
             window.location.href = "/login";
         });
     }
@@ -76,8 +77,12 @@ export const uploadImage = async (fileInput, uploadUrl, imageType) => {
     formData.append(imageType, fileInput.files[0]);
 
     try {
+        const token = localStorage.getItem("token");
         const response = await fetch(uploadUrl, {
             method: 'POST',
+            headers: {
+            Authorization: `Bearer ${token}`,
+            },
             body: formData
         });
         
@@ -95,9 +100,8 @@ export const uploadImage = async (fileInput, uploadUrl, imageType) => {
 }
 
 export const checkAuthentication = async () => {
-    fetch('/auth/check')
+    fetch('http://localhost:4444/auth/check')
     .then(response => {
-        console.log("das");
         if (response.status === 401) {
             alert('인증이 필요합니다.');
             window.location.href = '/login';

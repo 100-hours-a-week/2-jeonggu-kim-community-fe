@@ -4,6 +4,7 @@ const titleInput = document.getElementById('txt_title');
 const contentInput = document.getElementById('txt_content');
 const addButton = document.getElementById('btn_board_add');
 const contentHelper = document.getElementById('p_content_helper'); // 안내 문구 요소 선택
+const token = localStorage.getItem("token");
 
 // NOTE : 제목, 내용 입력 시 등록 버튼 활성화/비활성화 및 색상 변경
 const toggleButtonState = () => {
@@ -27,20 +28,23 @@ contentInput.addEventListener('blur', toggleButtonState);
 addButton.addEventListener("click", async () => {
     const title = titleInput.value;
     const content = contentInput.value;
-    const imageFileInput = document.getElementById('img_upload');
-    const img_url = imageFileInput.getAttribute("data-image-url");
-    const image_name = imageFileInput.files[0]?.name;
+    const image_urlInput = document.getElementById('img_upload');
+    const img_url = image_urlInput.getAttribute("data-image-url");
+    const image_name = image_urlInput.files[0]?.name;
     const formData = { title, content };
 
-    if (imageFileInput.files[0]) {
-        formData.imageFile = img_url;
-        formData.imageFileName = image_name;
+    if (image_urlInput.files[0]) {
+        formData.image_url = img_url;
+        formData.image_nm = image_name;
     }
 
     try {
-        const response = await fetch('/board', {
+        const response = await fetch('http://localhost:4444/boards', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json' ,
+                Authorization: `Bearer ${token}`
+            },
             body: JSON.stringify(formData)
         });
 
@@ -62,10 +66,13 @@ const imgUploadElement = document.getElementById('img_upload');
 imgUploadElement.addEventListener('change', async () => {
     if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
 
-    const result = await uploadImage(imgUploadElement, '/board/image', "boardImage");
+    const result = await uploadImage(imgUploadElement, 'http://localhost:4444/boards/image', "boardImage");
 
     if (result.success) {
-        imgUploadElement.setAttribute('data-image-url', result.filePath);
+        const filePath = result.filePath.split('/').pop();
+        const imageUrl = `http://localhost:4444/boards/image/${filePath}`;
+
+        imgUploadElement.setAttribute('data-image-url', imageUrl);
         alert(result.message);
     } else {
         alert(result.message);
