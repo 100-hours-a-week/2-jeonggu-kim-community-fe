@@ -64,8 +64,8 @@ const renderBoardInfo = (board) => {
     document.getElementById('span_board_author').textContent = board.nickname;
     document.getElementById('span_board_dt').textContent = formatDate(board.date);
     document.getElementById('p_board_content').textContent = board.content;
-    document.getElementById('span_like_cnt').textContent = board.likeCnt || 0;
-    document.getElementById('span_view_cnt').textContent = board.viewCnt || 0;
+    document.getElementById('span_like_cnt').textContent = board.like_cnt || 0;
+    document.getElementById('span_view_cnt').textContent = board.view_cnt || 0;
 }
 
 
@@ -336,11 +336,11 @@ const toggleEditComment = (commentElement, comment) => {
 }
 
 // NOTE : 댓글 저장
-async function saveEditedComment(commentId){
-    const newContent = document.querySelector(`.comment-text[data-comment-no="${commentId}"]`);
+async function saveEditedComment(comment_id){
+    const newContent = document.querySelector(`.comment-text[data-comment-no="${comment_id}"]`);
     try {
         // NOTE : 서버에 PATCH 요청으로 댓글 수정 내용 전송
-        const response = await fetch(`http://localhost:4444/comments/${commentId}`, {
+        const response = await fetch(`http://localhost:4444/comments/${comment_id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -349,7 +349,7 @@ async function saveEditedComment(commentId){
             body: JSON.stringify({ content: newContent.value })
         });
 
-        const commentElement = document.querySelector(`.save-comment[data-comment-no="${commentId}"]`);
+        const commentElement = document.querySelector(`.save-comment[data-comment-no="${comment_id}"]`);
         if (response.ok) {
             // NOTE : 댓글 텍스트를 `<input>`에서 `<p>`로 다시 변경
             const newCommentText = document.createElement('p');
@@ -403,7 +403,7 @@ const likeBoard = async(board_id) => {
         if (response.ok) {
             const likeCountElement = document.getElementById('span_like_cnt');
 
-            likeCountElement.textContent = result.data.likeCnt;
+            likeCountElement.textContent = result.data.like_cnt;
         } else {
             alert('좋아요 처리에 실패했습니다.');
         }
