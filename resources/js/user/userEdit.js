@@ -5,11 +5,17 @@ const nicknameText = document.getElementById('txt_nickname');
 const passwordEditButton = document.getElementById('btn_pwd_update');
 const profileInput = document.getElementById("file_profile_url");
 const profileHelper = document.getElementById('p_content_helper');
+const token = localStorage.getItem("token");
 
 // NOTE : 회원 정보 로딩
 const loadUserInfo = async () => {
     try {
-        const response = await fetch('/user');
+        const response = await fetch('http://localhost:4444/users', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
         if (response.ok) {
             const result = await response.json();
             if (result.message === 'success' && result.data) {
@@ -28,16 +34,17 @@ const loadUserInfo = async () => {
 // NOTE : 회원정보 수정
 InfoEditButton.addEventListener('click', async () => {
     try {
-        const profile_url = document.getElementById('file_profile_url').getAttribute("data-image-url");
-        const response = await fetch('/user', {
+        const profile_url = document.getElementById('img_profile_url').getAttribute("src");
+        const response = await fetch('http://localhost:4444/users', {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({ 
                 nickname: nicknameText.value, 
                 password: '',
-                profile_url
+                profile_url: profile_url
             })
         });
 
@@ -56,10 +63,11 @@ InfoEditButton.addEventListener('click', async () => {
 passwordEditButton.addEventListener('click', async () => {
     try {
         const passwordInput = document.getElementById("txt_pwd");
-        const response = await fetch('/user', {
+        const response = await fetch('http://localhost:4444/users', {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({ 
                 nickname: '', 
@@ -180,19 +188,23 @@ profileInput.addEventListener("change", async () => {
     formData.append('profileImage', profileInput.files[0]);
 
     try {
-        const response = await fetch('/user/image', {
+        const response = await fetch('http://localhost:4444/users/image', {
             method: 'POST',
             body: formData
         });
 
-        if (!response.ok) throw new Error('파일 업로드에 실패했습니다.');
-
-        const result_json = await response.json();
-        profileInput.setAttribute('data-image-url', result_json.filePath);
-        profileHelper.textContent = profileInput.files.length > 0 ? "" : "* 프로필 사진을 선택해 주세요";
-        
-        document.getElementById('img_profile_url').setAttribute("src", result_json.filePath);
-        alert("파일 업로드에 성공하였습니다.");
+        if (!response.ok) {
+            throw new Error('파일 업로드에 실패했습니다.');
+        } else { 
+            const result_json = await response.json();
+            const filePath = result_json.filePath.split('/').pop();
+            const imageUrl = `http://localhost:4444/users/image/${filePath}`;
+            
+            
+            document.getElementById('img_profile_url').setAttribute("src",  `${imageUrl}`);
+            profileHelper.textContent = profileInput.files.length > 0 ? "" : "* 프로필 사진을 선택해 주세요";
+            alert("파일 업로드에 성공하였습니다.");
+        }
     } catch (error) {
         console.error('오류:', error);
         profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
@@ -207,11 +219,17 @@ document.getElementById("a_user_delete").addEventListener('click', () => {
 
 document.getElementById("btn_user_confirm").addEventListener('click', async () => {
     try {
-        const response = await fetch('/user', { method: 'DELETE' });
+        const response = await fetch('http://localhost:4444/users', { 
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+        }, });
         const result = await response.json();
 
         if (response.ok) {
             alert(result.message);
+            localStorage.removeItem('token');
             window.location.href = '/login';
         } else {
             alert(result.message || '회원 삭제에 실패했습니다.');

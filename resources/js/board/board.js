@@ -13,7 +13,7 @@ const renderBoardList = (boardList) => {
     boardList.forEach(post => {
         const boardArticle = document.createElement('article');
         boardArticle.classList.add('board');
-        boardArticle.dataset.boardNo = post.boardNo;
+        boardArticle.dataset.board_id = post.board_id;
 
         boardArticle.innerHTML = `
             <h2 class="board-title">${post.title}</h2>
@@ -25,17 +25,17 @@ const renderBoardList = (boardList) => {
             </div>
             <hr class="full-width-line">
             <div class="board-author">
-                <div class="author-icon"><img class="board-profile-image" src="${post.profileUrl}" alt="프로필 이미지"></div>
+                <div class="author-icon"><img class="board-profile-image" src="${post.profile_url}" alt="프로필 이미지"></div>
                 <span>${post.nickname}</span>
             </div>
         `;
 
         boardArticle.addEventListener("click", () => {
             // NOTE : data-board-no 값
-            const boardNo = boardArticle.dataset.boardNo;
+            const board_id = boardArticle.dataset.board_id;
     
-            // NOTE : /boardInfo로 이동하면서 boardNo를 쿼리 파라미터로 전달
-            window.location.href = `/boardInfo?boardNo=${boardNo}`;
+            // NOTE : /boardInfo로 이동하면서 board_id를 쿼리 파라미터로 전달
+            window.location.href = `/boardInfo?board_id=${board_id}`;
         });
 
         // NOTE : 게시글 추가
@@ -47,7 +47,7 @@ const renderBoardList = (boardList) => {
 const loadBoardList = async () => {
     try {
         // NOTE : 게시글 목록 API 호출
-        const response = await fetch('/board/list');
+        const response = await fetch('http://localhost:4444/boards');
         const result = await response.json();
 
         if (result.message === 'success' && result.data) {

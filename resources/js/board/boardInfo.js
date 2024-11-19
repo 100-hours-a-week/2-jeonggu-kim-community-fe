@@ -5,27 +5,37 @@ const deleteButton = document.getElementById("btn_delete");
 const addButton = document.getElementById('btn_comment_add');
 const boardPopup = document.getElementById("div_board_popup");
 const commentPopup = document.getElementById("div_comment_popup");
+const token = localStorage.getItem("token");
 
 editButton.addEventListener("click", () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const boardNo = urlParams.get('boardNo');
-    window.location.href = `/boardEdit?boardNo=${boardNo}`;
+    const board_id = urlParams.get('board_id');
+    window.location.href = `/boardEdit?board_id=${board_id}`;
 });
 
 deleteButton.addEventListener("click", () => openBoardPopup());
 
 const loadBoardInfo = async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const boardNo = urlParams.get('boardNo');
+    const board_id = urlParams.get('board_id');
     
-    if (!boardNo) {
+    if (!board_id) {
         alert('게시글 번호가 존재하지 않습니다.');
         history.back(); // NOTE : 이전 페이지로 이동
         return;
     }
 
     try {
-        const response = await fetch(`/board/${boardNo}`); // NOTE : 서버로 boardNo 요청
+        // addViewCount가 완료된 후 fetch 요청 실행
+        await addViewCount(board_id); 
+
+        const response = await fetch(`http://localhost:4444/boards/${board_id}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`, // NOTE : JWT를 Authorization 헤더에 추가
+            },
+        });
+
         const result = await response.json();
         
         if (result.message === 'success' && result.data) {
@@ -39,19 +49,16 @@ const loadBoardInfo = async () => {
         alert('서버 오류가 발생했습니다.');
         history.back(); // NOTE : 이전 페이지로 이동
     }
-
-    addViewCount(boardNo)
-
-}
+};
 
 const renderBoardInfo = (board) => {
     if (board.isAuthor) {
         document.getElementById('div_board_button').style.display = "block";
-        document.getElementById('btn_board_confirm').setAttribute('data-board-no', board.id);
+        document.getElementById('btn_board_confirm').setAttribute('data-board-no', board.board_id);
     }
-    document.getElementById('img_profile_url').setAttribute("src", board.profileUrl);
-    if (board.imageFile) {
-        document.getElementById('img_url').setAttribute("src", board.imageFile);
+    document.getElementById('img_profile_url').setAttribute("src", board.profile_url);
+    if (board.image_url) {
+        document.getElementById('img_url').setAttribute("src", board.image_url);
     }
     document.getElementById('h2_section_title').textContent = board.title;
     document.getElementById('span_board_author').textContent = board.nickname;
@@ -85,16 +92,23 @@ function confirmCommentDelete(comment_no) {
 // NOTE : 댓글 불러오기
 const loadComments = async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const boardNo = urlParams.get('boardNo');
+    const board_id = urlParams.get('board_id');
     
-    if (!boardNo) {
+    if (!board_id) {
         alert('게시글 번호가 존재하지 않습니다.');
         history.back(); // NOTE : 이전 페이지로 이동
         return;
     }
 
     try {
-        const response = await fetch(`/comment/${boardNo}`);
+        
+        const response = await fetch(`http://localhost:4444/comments/${board_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+        });
         const result = await response.json();
         if (result.message === 'success' && result.data) {
             document.getElementById('span_comment_cnt').textContent = result.data.length || 0;
@@ -105,27 +119,27 @@ const loadComments = async () => {
             result.data.forEach(comment => {
                 const commentElement = document.createElement('div');
                 commentElement.classList.add('comment');
-                commentElement.setAttribute('data-comment-no', comment.id);
+                commentElement.setAttribute('data-comment-no', comment.comment_id);
 
                 let html = ``;
                 if (comment.isAuthor) {
                 html += `<div class="comment-actions">
-                            <button class="edit-comment" data-comment-no="${comment.id}">수정</button>
-                            <button class="delete-comment" data-comment-no="${comment.id}">삭제</button>
-                            <button class="save-comment" data-comment-no="${comment.id}" style="display:none;">저장</button>
+                            <button class="edit-comment" data-comment-no="${comment.comment_id}">수정</button>
+                            <button class="delete-comment" data-comment-no="${comment.comment_id}">삭제</button>
+                            <button class="save-comment" data-comment-no="${comment.comment_id}" style="display:none;">저장</button>
                             </div>`;
                 }
                 html += `<div class="comment-info">
-                                <img class="img_profile" src="${comment.profileFile}">
-                                <span class="comment-author">${comment.email}</span>
-                                <span class="comment-date">${comment.date}</span>
+                                <img class="img_profile" src="${comment.profile_url}">
+                                <span class="comment-author">${comment.nickname}</span>
+                                <span class="comment-date">${formatDate(comment.reg_dt)}</span>
                         </div>
                         <p class="comment-text">${comment.content}</p>`;
                 commentElement.innerHTML = html;
                 if(comment.isAuthor) {
                     commentElement.querySelector('.edit-comment').addEventListener('click', () => toggleEditComment(commentElement, comment));
-                    commentElement.querySelector('.delete-comment').addEventListener('click', () => {closeCommentPopup(comment.id)});
-                    commentElement.querySelector('.save-comment').addEventListener('click', () => {saveEditedComment(comment.id)});
+                    commentElement.querySelector('.delete-comment').addEventListener('click', () => {closeCommentPopup(comment.comment_id)});
+                    commentElement.querySelector('.save-comment').addEventListener('click', () => {saveEditedComment(comment.comment_id)});
                 }
                 
                 commentListSection.appendChild(commentElement);
@@ -145,15 +159,16 @@ document.getElementById('txt_comment_info').addEventListener('input', (event) =>
 });
 
 // NOTE : 댓글 등록 요청
-const addComment = async (boardNo) => {
+const addComment = async (board_id) => {
     const content = document.getElementById('txt_comment_info').value;
-    const response = await fetch('/comment', {
+    const response = await fetch('http://localhost:4444/comments', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
-            boardNo,
+            board_id,
             content
         })
     });
@@ -166,7 +181,7 @@ const addComment = async (boardNo) => {
         document.getElementById('btn_comment_add').disabled = true;
 
         const commentCountElement = document.getElementById('span_comment_cnt');
-        commentCountElement.textContent = result.data.commentCnt;
+        commentCountElement.textContent = parseInt(commentCountElement.textContent) + 1;
           
         addCommentToList(result.data); // NOTE : 댓글 리스트에 새 댓글 추가
     } else {
@@ -176,10 +191,10 @@ const addComment = async (boardNo) => {
 
 // NOTE : 댓글 등록 버튼 클릭 이벤트
 document.getElementById('btn_comment_add').addEventListener('click', () => {
-    // NOTE : URL에서 boardNo 가져오기
-    const boardNo = new URLSearchParams(window.location.search).get('boardNo');
-    if (boardNo) {
-        addComment(parseInt(boardNo, 10));
+    // NOTE : URL에서 board_id 가져오기
+    const board_id = new URLSearchParams(window.location.search).get('board_id');
+    if (board_id) {
+        addComment(parseInt(board_id, 10));
     } else {
         alert('게시글 번호를 확인할 수 없습니다.');
     }
@@ -200,9 +215,12 @@ document.getElementById('btn_board_confirm').addEventListener('click', async (ev
     }
 
     try {
-        const boardNo = event.target.getAttribute('data-board-no');
-        const response = await fetch(`/board/${boardNo}`, {
-            method: 'DELETE'
+        const board_id = event.target.getAttribute('data-board-no');
+        const response = await fetch(`http://localhost:4444/boards/${board_id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
         });
 
         if (response.ok) {            
@@ -237,8 +255,11 @@ document.getElementById('btn_comment_confirm').addEventListener('click', async (
 
     try {
         const commentNo = event.target.getAttribute('data-comment-no');
-        const response = await fetch(`/comment/${commentNo}`, {
-            method: 'DELETE'
+        const response = await fetch(`http://localhost:4444/comments/${commentNo}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
         });
 
         if (response.ok) {            
@@ -266,17 +287,17 @@ const addCommentToList = (comment) => {
     
     const commentElement = document.createElement('div');
     commentElement.classList.add('comment');
-    commentElement.setAttribute('data-comment-no', comment.id);
+    commentElement.setAttribute('data-comment-no', comment.comment_id);
 
     let html = '';
     html += `<div class="comment-actions">
-                <button class="edit-comment" data-comment-no="${comment.id}">수정</button>
-                <button class="delete-comment" data-comment-no="${comment.id}">삭제</button>
-                <button class="save-comment" data-comment-no="${comment.id}" style="display:none;">저장</button>
+                <button class="edit-comment" data-comment-no="${comment.comment_id}">수정</button>
+                <button class="delete-comment" data-comment-no="${comment.comment_id}">삭제</button>
+                <button class="save-comment" data-comment-no="${comment.comment_id}" style="display:none;">저장</button>
                 </div>`;
     html += `<div class="comment-info">
-                <img class="img_profile" src="${comment.profileFile}">
-                <span class="comment-author">${comment.email}</span>
+                <img class="img_profile" src="${comment.profile_url}">
+                <span class="comment-author">${comment.nickname}</span>
                 <span class="comment-date">${comment.date}</span>
              </div>
              <p class="comment-text">${comment.content}</p>`;
@@ -284,8 +305,8 @@ const addCommentToList = (comment) => {
 
     // NOTE : 이벤트 리스너 추가
     commentElement.querySelector('.edit-comment').addEventListener('click', () => toggleEditComment(commentElement, comment));
-    commentElement.querySelector('.delete-comment').addEventListener('click', () => {closeCommentPopup(comment.id)});
-    commentElement.querySelector('.save-comment').addEventListener('click', () => {saveEditedComment(comment.id)});
+    commentElement.querySelector('.delete-comment').addEventListener('click', () => {closeCommentPopup(comment.comment_id)});
+    commentElement.querySelector('.save-comment').addEventListener('click', () => {saveEditedComment(comment.comment_id)});
 
     // NOTE : 댓글 리스트에 새 댓글 요소 추가
     commentListSection.appendChild(commentElement);
@@ -303,11 +324,11 @@ const toggleEditComment = (commentElement, comment) => {
         inputElement.type = 'text';
         inputElement.value = currentText;
         inputElement.classList.add('comment-text');
-        inputElement.dataset.commentNo = comment.id;
+        inputElement.dataset.commentNo = comment.comment_id;
         commentTextElement.replaceWith(inputElement);
         
         // NOTE : 저장 버튼 추가
-        const commentElement = document.querySelector(`.save-comment[data-comment-no="${comment.id}"]`);
+        const commentElement = document.querySelector(`.save-comment[data-comment-no="${comment.comment_id}"]`);
         if (commentElement) {
             commentElement.style.display = "block" // 해당 댓글 요소 제거
         }
@@ -319,9 +340,10 @@ async function saveEditedComment(commentId){
     const newContent = document.querySelector(`.comment-text[data-comment-no="${commentId}"]`);
     try {
         // NOTE : 서버에 PATCH 요청으로 댓글 수정 내용 전송
-        const response = await fetch(`/comment/${commentId}`, {
+        const response = await fetch(`http://localhost:4444/comments/${commentId}`, {
             method: 'PATCH',
             headers: {
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ content: newContent.value })
@@ -350,9 +372,14 @@ async function saveEditedComment(commentId){
 }
 
 // NOTE : 조회수 증가
-const addViewCount = async(boardNo) => {
+const addViewCount = async(board_id) => {
     try {
-        const response = await fetch(`/board/view/${boardNo}`, { method: 'PATCH' });
+        const response = await fetch(`http://localhost:4444/boards/view/${board_id}`, { 
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }, 
+        });
         if (!response.ok) {
             console.error('Failed to increment view count');
         }
@@ -361,14 +388,15 @@ const addViewCount = async(boardNo) => {
     }
 }
 // NOTE : 좋아요 클릭 이벤트 처리 함수
-const likeBoard = async(boardNo) => {
+const likeBoard = async(board_id) => {
     try {
-        const response = await fetch('/board/like', {
+        const response = await fetch('http://localhost:4444/boards/like', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify({boardNo})
+            body: JSON.stringify({board_id})
         });
 
         const result = await response.json();
@@ -387,9 +415,9 @@ const likeBoard = async(boardNo) => {
 // NOTE : 좋아요 버튼 클릭 이벤트 리스너 추가
 document.getElementById('div_like_cnt').addEventListener('click', () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const boardNo = urlParams.get('boardNo');
-    if (boardNo) {
-        likeBoard(parseInt(boardNo, 10));
+    const board_id = urlParams.get('board_id');
+    if (board_id) {
+        likeBoard(parseInt(board_id, 10));
     }
 });
 
