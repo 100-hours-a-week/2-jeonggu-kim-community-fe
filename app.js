@@ -1,33 +1,12 @@
 const express = require('express');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 const path = require('path');
-const fs = require('fs');
 const app = express();
-const PORT = 3000;
+const PORT = 5555;
 // NOTE : authRoutes와 isAuthenticated 임포트
-const { router: authRoutes, isAuthenticated } = require('./app/routes/authRoutes');
-const userRoutes = require('./app/routes/userRoutes');
-const boardRoutes = require('./app/routes/boardRoutes');
-const commentRoutes = require('./app/routes/commentRoutes');
 
 app.use(express.json());
-app.use(
-    session({
-        secret: 'your-secret-key', // NOTE : 세션 암호화를 위한 키
-        resave: false, // NOTE : 세션이 수정되지 않은 경우 저장하지 않음
-        saveUninitialized: false, // NOTE : 초기화되지 않은 세션을 저장하지 않음
-        cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 } // NOTE : 1일 동안 세션 유지 (밀리초 단위)
-    })
-);
-
-
-app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
-app.use('/board', isAuthenticated, boardRoutes);
-app.use('/comment', isAuthenticated, commentRoutes);
-app.use('/images', express.static(path.join(__dirname, 'app/images')));
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json({ message: err.message, data: null });
