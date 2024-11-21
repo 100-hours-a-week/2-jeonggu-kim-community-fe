@@ -90,7 +90,7 @@ ver2 : react express mySQL<br>
                 userEdit.js<br>
 
 
-#Setup
+# Setup
 1. Clone the project<br>
    git clone https://github.com/your-repo/jeonggu-kim-community.git<br>
 2. Navigate to the project folder<br>
@@ -101,13 +101,13 @@ ver2 : react express mySQL<br>
   Open your browser and go to http://localhost:5555 to view the application.<br>
 
 
-
 # 시연 영상
 ### Jeonggu.kim's BOARD_v.1<br>
 [![Jeonggu.kim's BOARD_v.1](https://img.youtube.com/vi/J31R97Q49sQ/0.jpg)](https://youtu.be/J31R97Q49sQ)<br>
 
 ### Jeonggu.kim's BOARD_v.2<br>
 [![Jeonggu.kim's BOARD_v.2](https://img.youtube.com/vi/pqsBPss-uD8/0.jpg)](https://youtu.be/pqsBPss-uD8)<br>
+
  
 # Logs and Notes
 🔗 **Week 1~4 Notes**  
