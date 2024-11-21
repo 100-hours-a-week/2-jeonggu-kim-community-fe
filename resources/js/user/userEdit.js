@@ -49,6 +49,8 @@ InfoEditButton.addEventListener('click', async () => {
         });
 
         if (response.ok) {
+            const result_json = await response.json();
+            localStorage.setItem("token", result_json.data.token);
             alert('회원정보가 수정되었습니다.');
         } else {
             alert('회원정보 수정에 실패했습니다.');
@@ -86,19 +88,19 @@ passwordEditButton.addEventListener('click', async () => {
     }
 });
 
-// NOTE : 메뉴 회원 정보 수정
-menuProfileButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    document.getElementById('div_pwd_update').style.display = 'none';
-    document.getElementById('div_profile_section').style.display = 'block';
-});
+// // NOTE : 메뉴 회원 정보 수정
+// menuProfileButton.addEventListener('click', (event) => {
+//     event.preventDefault();
+//     document.getElementById('div_pwd_update').style.display = 'none';
+//     document.getElementById('div_profile_section').style.display = 'block';
+// });
 
-// NOTE : 메뉴 비밀번호 정보 수정
-menuPasswordButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    document.getElementById('div_profile_section').style.display = 'none';
-    document.getElementById('div_pwd_update').style.display = 'block';
-});
+// // NOTE : 메뉴 비밀번호 정보 수정
+// menuPasswordButton.addEventListener('click', (event) => {
+//     event.preventDefault();
+//     document.getElementById('div_profile_section').style.display = 'none';
+//     document.getElementById('div_pwd_update').style.display = 'block';
+// });
 
 // NOTE : URL 파라미터에서 type 값을 가져와 특정 섹션 표시
 const urlParams = new URLSearchParams(window.location.search);
@@ -166,11 +168,9 @@ const validateForm = (isValid) => {
     &&  passwordHelper.textContent.trim() === ''
     &&  confirmPasswordHelper.textContent.trim() === '') {
         passwordEditButton.disabled = false;
-        passwordEditButton.style.backgroundColor = "#7F6AEE";
         passwordEditButton.style.cursor = "pointer";
     } else {
         passwordEditButton.disabled = true;
-        passwordEditButton.style.backgroundColor = "#ACA0EB";
         passwordEditButton.style.cursor = "not-allowed";
     }
 };

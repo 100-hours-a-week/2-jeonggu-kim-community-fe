@@ -108,12 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
         &&  nicknameHelper.textContent.trim() === '') {
             registerButton.disabled = false;
             // NOTE: 활성화 색상 및 활성화 커서
-            registerButton.style.backgroundColor = "#7F6AEE"; 
             registerButton.style.cursor = "pointer";
         } else {
             registerButton.disabled = true;
             // NOTE: 비활성화 색상 및 비활성화 커서
-            registerButton.style.backgroundColor = "#ACA0EB";
             registerButton.style.cursor = "not-allowed";
         }
     };
