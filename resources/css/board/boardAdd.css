@@ -2,7 +2,7 @@
 /* NOTE : 게시글 화면 title */
 .board-title {
     margin-bottom: 51px;
-    margin-top: 24px;
+    margin-top: 50px;
     /* font-family: Pretendard; */
     font-size: 24px;
     font-weight: 700;
@@ -40,6 +40,7 @@
     top: 23px;
     gap: 0px;
     opacity: 0px;
+    padding-left: 5px;
 
 }
 
@@ -73,7 +74,7 @@
 
 /* NOTE : 게시글 helper 내용 */
 .helper-text {
-    color: #d9534f;
+    color: #e74c3c;
     margin-top: 5px;
     height: 64px;
 
@@ -95,13 +96,16 @@
     width: 355px; 
     padding: 10px;
     font-size: 1rem;
-    background-color: #ACA0EB;
+    background-color: black;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     display: block;
-    margin: 20px auto 0
+    margin: 30px auto 0
+}
+#btn_board_add:hover {
+    background-color: #e74c3c;
 }
 
 /* helper text */
@@ -112,7 +116,7 @@
     line-height: 14.52px;
     text-align: left;
 
-    color: #d9534f;
+    color: #e74c3c;
     margin-bottom: 3px;
 }
 

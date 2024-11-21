@@ -10,7 +10,6 @@ const token = localStorage.getItem("token");
 const toggleButtonState = () => {
     const isContentFilled = titleInput.value.trim() !== "" && contentInput.value.trim() !== "";
     editButton.disabled = !isContentFilled;
-    editButton.style.backgroundColor = isContentFilled ? '#7F6AEE' : '#ACA0EB';
     contentHelper.textContent = isContentFilled ? "" : "* 제목과 내용을 모두 작성해 주세요";
 };
 

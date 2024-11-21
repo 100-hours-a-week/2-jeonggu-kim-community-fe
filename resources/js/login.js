@@ -47,12 +47,10 @@ const validateForm = (isTrue) => {
   ) {
       loginButton.disabled = false;
       // NOTE : 활성화 색상 and 활성화 커서
-      loginButton.style.backgroundColor = "#7F6AEE"; 
       loginButton.style.cursor = "pointer";
   } else {
       loginButton.disabled = true;
       // NOTE : 비활성화 색상 and 비활성화 커서
-      loginButton.style.backgroundColor = "#ACA0EB";
       loginButton.style.cursor = "not-allowed";
 
   }

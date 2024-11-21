@@ -7,21 +7,10 @@
     <link rel="stylesheet" href="/css/board/boardAdd.css">
     <link rel="stylesheet" href="/css/common/common.css">
     <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
 </head>
 <body>
-    <header class="header">
-        <div><img class="back-icon" src="/images/back_icon.png"></div>
-        <h2>아무 말 대잔치</h2>
-        <!-- NOTE : profile menu -->
-        <div class="profile-container">
-            <div class="profile-icon">😊</div>
-            <div class="profile-menu" style="display:none;">
-                <button class="text-center" id="btn_profile_menu">회원정보수정</button>
-                <button class="text-center" id="btn_pwd_menu">비밀번호수정</button>
-                <button class="text-center" id="btn_logout_menu">로그아웃</button>
-            </div>
-        </div>
-    </header>
+    <header class="header" id="header"></header>
     <hr class="full-width-line">
     <!-- NOTE : main -->
     <main class="width-570">
@@ -49,8 +38,13 @@
         <!-- NOTE : 수정 버튼 -->
         <button id="btn_board_add">완료</button>
     </main>
+    <footer class="footer" id="footer"></footer>
+    <div class="cursor-dot"></div>
+
     <script src="/js/common/auth.js" defer></script>
-    <script src="/js/common/common.js" type="module"></script>
+    <script src="/js/common/header.js" defer></script>
     <script src="/js/board/boardAdd.js" type="module"></script>
+    <script src="/js/common/common.js" type="module"></script>
+    <script src="/js/common/footer.js" defer></script>
 </body>
 </html>

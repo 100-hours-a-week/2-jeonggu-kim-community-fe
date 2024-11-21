@@ -10,7 +10,7 @@
     border-radius: 8px;
 }
 .button {
-    background-color: #b3a0ff;
+    background-color: black;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -27,8 +27,11 @@
     border-radius: 4px;
     opacity: 0px;
     border: none;
-    background-color: #ACA0EB;
+    background-color: black;
     color: white;
+}
+.defult-button:hover {
+    background-color: #e74c3c;
 }
 .input-field {
     display: block;
@@ -39,7 +42,7 @@
     border-radius: 5px;
 }
 .input-edit-button {
-    background-color: #ACA0EB;
+    background-color: black;
     width: 102px;
     height:46px;
     padding: 12px 20px 12px 20px;

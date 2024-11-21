@@ -7,21 +7,10 @@
     <link rel="stylesheet" href="/css/common/header.css">
     <link rel="stylesheet" href="/css/common/common.css">
     <link rel="stylesheet" href="/css/board/boardInfo.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
 </head>
 <body>
-    <header class="header">
-        <div><img class="back-icon" src="/images/back_icon.png"></div>
-        <h2>아무 말 대잔치</h2>
-        <!-- NOTE : profile menu -->
-        <div class="profile-container">
-            <div class="profile-icon">😊</div>
-            <div class="profile-menu" style="display:none;">
-                <button class="text-center" id="btn_profile_menu">회원정보수정</button>
-                <button class="text-center" id="btn_pwd_menu">비밀번호수정</button>
-                <button class="text-center" id="btn_logout_menu">로그아웃</button>
-            </div>
-        </div>
-    </header>
+    <header class="header" id="header"></header>
     <hr class="full-width-line">
     <!--NOTE : main -->
     <main>
@@ -52,9 +41,9 @@
 
         <!-- NOTE : board stats section 조회수, 좋아요수, 댓글수 -->
         <section class="board-stats section-center">
-            <div class="stat-item" id="div_like_cnt"><span class="item-cnt" id="span_like_cnt"></span><span class="item-text">좋아요수</span></div>
-            <div class="stat-item"><span class="item-cnt" id="span_view_cnt"></span><span class="item-text">조회수</span></div>
-            <div class="stat-item"><span class="item-cnt" id="span_comment_cnt"></span><span class="item-text">댓글수</span></div>
+            <div class="stat-item" id="div_like_cnt"><img class="width-30" src="/images/like.png"><span class="item-cnt" id="span_like_cnt"></span><span class="item-text">좋아요수</span></div>
+            <div class="stat-item"><img class="width-30" src="/images/profile-icon.png"><span class="item-cnt" id="span_view_cnt"></span><span class="item-text">조회수</span></div>
+            <div class="stat-item"><img class="board-comment-icon width-30 margin-bottom-3" src="/images/comment.png"><span class="item-cnt" id="span_comment_cnt"></span><span class="item-text">댓글수</span></div>
         </section>
 
         <hr class="hr-line-middle" id="hr_board_comment">
@@ -68,6 +57,9 @@
         <section class="comment-list section-center">
         </section>
     </main>
+    <footer class="footer" id="footer"></footer>
+    <div class="cursor-dot"></div>
+
     <!-- NOTE : 수정/삭제 버튼 -->
     <div class="modal-overlay" style="display: none;">
         <div class="modal">
@@ -90,7 +82,10 @@
         <button class="popup-cancel-button" id="btn_comment_cancel">취소</button>
         <button class="popup-confirm-button" id="btn_comment_confirm">확인</button>
     </div>
+    
     <script src="/js/common/auth.js" defer></script>
+    <script src="/js/common/header.js" defer></script>
+    <script src="/js/common/footer.js" defer></script>
     <script src="/js/common/common.js" type="module"></script>
     <script src="/js/board/boardInfo.js" type="module"></script>
 </body>
