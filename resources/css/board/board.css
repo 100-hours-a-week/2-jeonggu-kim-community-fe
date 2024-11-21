@@ -7,6 +7,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
+    display: none;
 }
 
 .button-container {
@@ -15,7 +16,7 @@
     margin-bottom: 20px;
 }
 .write-board-button {
-    background-color: #ACA0EB;
+    background-color: black;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -31,7 +32,7 @@
 }
 
 .write-board-button:hover {
-    background-color: #7f6ae2;
+    background-color: #e74c3c;
 }
 
 /* NOTE : 게시글 리스트 */
@@ -69,8 +70,14 @@
     gap: 10px;
     font-size: 0.875rem;
     color: #666;
+    margin-top: 20px;
 }
-
+.board-content {
+    font-size: 13px;
+}
+.board-wrapper {
+    margin-top: 20px;
+}
 .board-date {
     margin-left: auto;
 }
@@ -91,4 +98,138 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
+}
+
+.searchInput {
+    border: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    outline: none;
+    background: transparent;
+    color:white;
+    border-bottom: 2px solid #000;
+    height: 28px;
+    padding-left: 5px;
+}
+.searchInput::placeholder {
+    color: #ffffff;
+    background: transparent;
+    opacity: 0.8; 
+    outline: none;
+    font-style: italic; 
+}
+.board-header {
+    margin-top: 30px;;
+}
+.board-header-search .search {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: width 0.5s;
+    -webkit-transition: width 0.5s;
+    margin-top: 7px;
+    /* border-bottom: 2px solid #000; */
+    
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: visible; /* NOTE : 드롭다운 짤리는 현상 방지*/
+}
+.board-header-search {
+    width: 222px;
+    margin-top: -6px;
+}
+.search::after {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../images/search.png');
+    background-size: contain;
+    background-repeat: no-repeat; 
+    background-position: center;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; 
+}
+
+#btn_board_add {
+    background-color: black;
+}
+
+#btn_board_add:hover {
+    /* background-color:   #e74c3c; */
+    background-color: #60a0c6;
+    color: black;
+}
+
+.board-img-icon{
+    object-fit: contain;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.board:hover {
+    box-shadow: 10px 10px 10px rgb(0 0 0 / 50%);
+}
+
+/* NOTE : 드롭다운 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+#dropdown-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70PX;
+    height: 30px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 10px;
+}
+
+.caret-icon {
+font-size: 12px;
+margin-left: 5px;
+}
+
+/* 드롭다운 메뉴 스타일 */
+.dropdown-menu {
+    position: absolute;
+    top: 100%; /* 버튼 바로 아래 위치 */
+    left: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    background: #fff;
+    width: 70px;
+    z-index: 10;
+    display: none;
+}
+.dropdown-menu[hidden] {
+    display: none; 
+}
+
+.dropdown-menu:not([hidden]) {
+    display: block;
+}
+.dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.dropdown-item:hover {
+    background: #f0f0f0;
+}
+.dropdown-menu.show {
+    display: block; /* 드롭다운이 보이도록 설정 */
 }

@@ -68,12 +68,13 @@
     background-color: #F4F5F7;
     color: #838486;
     border: none;
-    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 /* NOTE : 게시글 helper 내용 */
 .helper-text {
-    color: #d9534f;
+    color: #e74c3c;
     margin-top: 5px;
     height: 64px;
 
@@ -95,13 +96,16 @@
     width: 355px; 
     padding: 10px;
     font-size: 1rem;
-    background-color: #ACA0EB;
+    background-color: black;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     display: block;
     margin: 20px auto 0
+}
+#btn_board_update:hover {
+    background-color: #e74c3c;
 }
 
 /* helper text */
@@ -112,7 +116,7 @@
     line-height: 14.52px;
     text-align: left;
 
-    color: #d9534f;
+    color: #e74c3c;
     margin-bottom: 3px;
 }
 
@@ -145,12 +149,15 @@
     font-size: 14px;
     margin-top:8px;
 }
+.file-upload-label:hover {
+    background-color: #e74c3c;
+}
 
 #lbl_file_upload{
     font-weight: normal;
 }
 
 #file-name-display {
-    color: #666;
+    color: #dbdbdb;
     margin-top:8px;
 }

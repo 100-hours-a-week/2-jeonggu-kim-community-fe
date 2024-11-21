@@ -16,7 +16,7 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 264px;
+    margin-top: 100px;
 }
 form {
     display: flex;
@@ -34,7 +34,7 @@ h1 {
 }
 label {
     font-size: 15px;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 5px;
 }
 input[type="email"],
@@ -44,9 +44,9 @@ input[type="password"] {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-.login-button.enabled {
+/* .login-button.enabled {
     background-color: #7F6AE2;
-}
+} */
 #loginForm {
     width: 355px;
     margin-top: 67px;
@@ -64,4 +64,8 @@ input[type="password"] {
     font-size: 12px;
     font-weight: 400;
     line-height: 14.52px;
+}
+
+#btn_login:hover {
+    background-color: #e74c3c;
 }
