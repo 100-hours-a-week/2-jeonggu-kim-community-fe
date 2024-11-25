@@ -1,4 +1,5 @@
-import { formatDate } from '/js/common/common.js';
+import { formatDate, fetchConfig } from '/js/common/common.js';
+let apiUrl = '';
 
 document.getElementById("btn_board_add").addEventListener("click", () => {
     // NOTE : 버튼 클릭 시 /boardAdd로 이동
@@ -15,13 +16,15 @@ const renderBoardList = (boardList) => {
         boardArticle.classList.add('board');
         boardArticle.dataset.board_id = post.board_id;
         let boardContent = post.content;
+        let profileUrl = post.profile_url || "../../images/default_profile.png";
+
         const maxLength = 40;
         if (boardContent.length > maxLength) {
             boardContent = boardContent.slice(0, maxLength) + '...';
         }
         boardArticle.innerHTML = `
             <div class="board-author">
-                <div class="author-icon"><img class="board-profile-image" src="${post.profile_url}" alt="프로필 이미지"></div>
+                <div class="author-icon"><img class="board-profile-image" src="${profileUrl}" alt="프로필 이미지"></div>
                 <span>${post.nickname}</span>
             </div>
             <div class="board-wrapper">
@@ -58,7 +61,7 @@ const loadBoardList = async (searchKey = "", searchValue = "") => {
         if (searchValue !== "") queryParams.append("searchValue", searchValue);
 
         // NOTE : 게시글 목록 API 호출
-        const response = await fetch(`http://localhost:4444/boards?${queryParams.toString()}`, {
+        const response = await fetch(`${apiUrl}/boards?${queryParams.toString()}`, {
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json'
@@ -129,5 +132,17 @@ const setupHeaderEvents = () => {
     });
 }
 // NOTE : 페이지 로드 시 게시글 목록 불러오기
-document.addEventListener('DOMContentLoaded', () => {loadBoardList(); setupHeaderEvents();});
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // NOTE: 환경 변수 API URL 로드
+        const config = await fetchConfig();
+        apiUrl = config.apiUrl;
 
+        // NOTE: 초기화 함수 실행
+        loadBoardList();
+        setupHeaderEvents();
+    } catch (error) {
+        console.error('Error initializing page:', error);
+        alert('페이지를 초기화하는 중 오류가 발생했습니다.');
+    }
+});

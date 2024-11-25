@@ -1,3 +1,4 @@
+import { fetchConfig } from '/js/common/common.js';
 const menuProfileButton = document.querySelector('#btn_profile_menu');
 const menuPasswordButton = document.querySelector('#btn_pwd_menu');
 const InfoEditButton = document.getElementById('btn_info_edit');
@@ -6,11 +7,12 @@ const passwordEditButton = document.getElementById('btn_pwd_update');
 const profileInput = document.getElementById("file_profile_url");
 const profileHelper = document.getElementById('p_content_helper');
 const token = localStorage.getItem("token");
-
+const config = await fetchConfig();
+const apiUrl = config.apiUrl;
 // NOTE : 회원 정보 로딩
 const loadUserInfo = async () => {
     try {
-        const response = await fetch('http://localhost:4444/users', {
+        const response = await fetch(`${apiUrl}/users`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`
@@ -35,7 +37,7 @@ const loadUserInfo = async () => {
 InfoEditButton.addEventListener('click', async () => {
     try {
         const profile_url = document.getElementById('img_profile_url').getAttribute("src");
-        const response = await fetch('http://localhost:4444/users', {
+        const response = await fetch(`${apiUrl}/users`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -65,7 +67,7 @@ InfoEditButton.addEventListener('click', async () => {
 passwordEditButton.addEventListener('click', async () => {
     try {
         const passwordInput = document.getElementById("txt_pwd");
-        const response = await fetch('http://localhost:4444/users', {
+        const response = await fetch(`${apiUrl}/users`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -188,7 +190,7 @@ profileInput.addEventListener("change", async () => {
     formData.append('profileImage', profileInput.files[0]);
 
     try {
-        const response = await fetch('http://localhost:4444/users/image', {
+        const response = await fetch(`${apiUrl}/users/image`, {
             method: 'POST',
             body: formData
         });
@@ -198,7 +200,7 @@ profileInput.addEventListener("change", async () => {
         } else { 
             const result_json = await response.json();
             const filePath = result_json.filePath.split('/').pop();
-            const imageUrl = `http://localhost:4444/users/image/${filePath}`;
+            const imageUrl = `${apiUrl}/users/image/${filePath}`;
             
             
             document.getElementById('img_profile_url').setAttribute("src",  `${imageUrl}`);
@@ -220,7 +222,7 @@ document.getElementById("a_user_delete").addEventListener('click', () => {
 // NOTE : 회원 탈퇴 실행
 document.getElementById("btn_user_confirm").addEventListener('click', async () => {
     try {
-        const response = await fetch('http://localhost:4444/users', { 
+        const response = await fetch(`${apiUrl}/users`, { 
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

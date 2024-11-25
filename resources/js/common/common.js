@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
- 
-});
-
 // NOTE : "YYYY-MM-DD HH:MM:SS" 형식으로
 export const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -46,3 +42,18 @@ export const uploadImage = async (fileInput, uploadUrl, imageType) => {
         return { success: false, message: '서버 오류가 발생했습니다.' };
     }
 }
+
+// NOTE : 환경 변수
+export const fetchConfig = async () => {
+    try {
+        const response = await fetch('/config'); // 서버에서 환경 변수 호출
+        if (!response.ok) {
+            throw new Error(`Failed to fetch config: ${response.status}`);
+        }
+        const config = await response.json();
+        return config; // 전체 환경 변수 객체 반환
+    } catch (error) {
+        console.error('Error fetching config:', error);
+        throw error;
+    }
+};

@@ -1,4 +1,6 @@
-import { formatDate } from '/js/common/common.js';
+import { formatDate, fetchConfig } from '/js/common/common.js';
+const config = await fetchConfig();
+const apiUrl = config.apiUrl;
 
 const editButton = document.getElementById("btn_edit");
 const deleteButton = document.getElementById("btn_delete");
@@ -29,7 +31,7 @@ const loadBoardInfo = async () => {
         // addViewCount가 완료된 후 fetch 요청 실행
         await addViewCount(board_id); 
 
-        const response = await fetch(`http://localhost:4444/boards/${board_id}`, {
+        const response = await fetch(`${apiUrl}/boards/${board_id}`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`, // NOTE : JWT를 Authorization 헤더에 추가
@@ -56,7 +58,8 @@ const renderBoardInfo = (board) => {
         document.getElementById('div_board_button').style.display = "block";
         document.getElementById('btn_board_confirm').setAttribute('data-board-no', board.board_id);
     }
-    document.getElementById('img_profile_url').setAttribute("src", board.profile_url);
+    const profile_url = board.profile_url || "../../images/default_profile.png";
+    document.getElementById('img_profile_url').setAttribute("src", profile_url);
     if (board.image_url) {
         document.getElementById('img_url').setAttribute("src", board.image_url);
     }
@@ -102,7 +105,7 @@ const loadComments = async () => {
 
     try {
         
-        const response = await fetch(`http://localhost:4444/comments/${board_id}`, {
+        const response = await fetch(`${apiUrl}/comments/${board_id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,6 +121,7 @@ const loadComments = async () => {
             
             result.data.forEach(comment => {
                 const commentElement = document.createElement('div');
+                const profile_url = comment.profile_url || "../../images/default_profile.png";
                 commentElement.classList.add('comment');
                 commentElement.setAttribute('data-comment-no', comment.comment_id);
 
@@ -130,7 +134,7 @@ const loadComments = async () => {
                             </div>`;
                 }
                 html += `<div class="comment-info">
-                                <img class="img_profile" src="${comment.profile_url}">
+                                <img class="img_profile" src="${profile_url}">
                                 <span class="comment-author">${comment.nickname}</span>
                                 <span class="comment-date">${formatDate(comment.reg_dt)}</span>
                         </div>
@@ -161,7 +165,7 @@ document.getElementById('txt_comment_info').addEventListener('input', (event) =>
 // NOTE : 댓글 등록 요청
 const addComment = async (board_id) => {
     const content = document.getElementById('txt_comment_info').value;
-    const response = await fetch('http://localhost:4444/comments', {
+    const response = await fetch(`${apiUrl}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -216,7 +220,7 @@ document.getElementById('btn_board_confirm').addEventListener('click', async (ev
 
     try {
         const board_id = event.target.getAttribute('data-board-no');
-        const response = await fetch(`http://localhost:4444/boards/${board_id}`, {
+        const response = await fetch(`${apiUrl}/boards/${board_id}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`
@@ -255,7 +259,7 @@ document.getElementById('btn_comment_confirm').addEventListener('click', async (
 
     try {
         const commentNo = event.target.getAttribute('data-comment-no');
-        const response = await fetch(`http://localhost:4444/comments/${commentNo}`, {
+        const response = await fetch(`${apiUrl}/comments/${commentNo}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`
@@ -340,7 +344,7 @@ async function saveEditedComment(comment_id){
     const newContent = document.querySelector(`.comment-text[data-comment-no="${comment_id}"]`);
     try {
         // NOTE : 서버에 PATCH 요청으로 댓글 수정 내용 전송
-        const response = await fetch(`http://localhost:4444/comments/${comment_id}`, {
+        const response = await fetch(`${apiUrl}/comments/${comment_id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -374,7 +378,7 @@ async function saveEditedComment(comment_id){
 // NOTE : 조회수 증가
 const addViewCount = async(board_id) => {
     try {
-        const response = await fetch(`http://localhost:4444/boards/view/${board_id}`, { 
+        const response = await fetch(`${apiUrl}/boards/view/${board_id}`, { 
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${token}`
@@ -390,7 +394,7 @@ const addViewCount = async(board_id) => {
 // NOTE : 좋아요 클릭 이벤트 처리 함수
 const likeBoard = async(board_id) => {
     try {
-        const response = await fetch('http://localhost:4444/boards/like', {
+        const response = await fetch(`${apiUrl}/boards/like`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,10 +1,15 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-
+const dotenv = require('dotenv');
 const path = require('path');
 const app = express();
 const PORT = 3000;
+const cors = require('cors');
+
+app.use(cors());
 // NOTE : authRoutes와 isAuthenticated 임포트
+
+require('dotenv').config({ path: path.resolve(__dirname, 'config/.env') });
 
 app.use(express.json());
 
@@ -15,6 +20,7 @@ app.use((err, req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'resources')));
 app.use('/css', express.static(path.join(__dirname, 'resources/css')));
+app.use('/js', express.static(path.join(__dirname, 'resources/js')));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'app/views/login.html'));
@@ -50,6 +56,15 @@ app.get('/userEdit', (req, res) => {
 
 app.use(cookieParser());
 
+// API 엔드포인트로 환경 변수 전달
+app.get('/config', (req, res) => {
+    const apiUrl = process.env.REACT_APP_API_URL;
+    if (!apiUrl) {
+        res.status(500).json({ error: 'API URL not configured' });
+    } else {
+        res.json({ apiUrl });
+    }
+});
 // NOTE : 서버 시작
 app.listen(PORT, () => {
     console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
