@@ -1,6 +1,9 @@
 import { fetchConfig } from '/js/common/common.js';
-const config = await fetchConfig();
-const apiUrl = config.apiUrl;
+let apiUrl = '';
+document.addEventListener('DOMContentLoaded', async () => {
+    const config = await fetchConfig();
+    apiUrl = config.apiUrl;
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     const emailInput = document.getElementById("txt_email");
