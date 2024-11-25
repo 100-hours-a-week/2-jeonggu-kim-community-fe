@@ -217,6 +217,7 @@ document.getElementById("a_user_delete").addEventListener('click', () => {
     document.getElementById("div_user_popup").style.display = "block"; 
 });
 
+// NOTE : 회원 탈퇴 실행
 document.getElementById("btn_user_confirm").addEventListener('click', async () => {
     try {
         const response = await fetch('http://localhost:4444/users', { 
