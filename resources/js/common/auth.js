@@ -1,4 +1,7 @@
-const publicPages = ['/login', '/register']; // 로그인이 필요 없는 페이지
+import { fetchConfig } from '/js/common/common.js';
+const publicPages = ['/login', '/register']; // NOTE : 로그인이 필요 없는 페이지
+const config = await fetchConfig();
+const apiUrl = config.apiUrl;
 
 // NOTE : 인증 검사
 const checkAuthentication = async () => {
@@ -11,7 +14,7 @@ const checkAuthentication = async () => {
     }
 
     try {
-        const response = await fetch('http://localhost:4444/auth', {
+        const response = await fetch(`${apiUrl}/auth`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,

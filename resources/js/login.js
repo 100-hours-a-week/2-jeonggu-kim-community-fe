@@ -1,3 +1,7 @@
+import { fetchConfig } from '/js/common/common.js';
+const config = await fetchConfig();
+const apiUrl = config.apiUrl;
+
 const emailInput = document.getElementById("txt_email");
 const passwordInput = document.getElementById("txt_pwd");
 const loginButton = document.getElementById("btn_login");
@@ -66,7 +70,7 @@ loginButton.addEventListener("click", async (event) => {
   // NOTE : 유효성 검사가 통과되었을 때만 처리
   if (!loginButton.disabled) {
     try {
-      const response = await fetch('http://localhost:4444/auth/login', {
+      const response = await fetch(`${config.apiUrl}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password})

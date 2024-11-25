@@ -1,3 +1,7 @@
+import { fetchConfig } from '/js/common/common.js';
+const config = await fetchConfig();
+const apiUrl = config.apiUrl;
+
 document.addEventListener("DOMContentLoaded", () => {
     const emailInput = document.getElementById("txt_email");
     const passwordInput = document.getElementById("txt_pwd");
@@ -125,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const profile_url = document.getElementById('file_profile_url').getAttribute("data-image-url"); // NOTE: 파일 업로드 처리 로직이 추가되어야 함
         
         try {
-            const response = await fetch('http://localhost:4444/users', {
+            const response = await fetch(`${apiUrl}/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password, nickname, profile_url })
@@ -146,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const chkDuplication = async (key, value) => { // NOTE : (수정) function()에서 화살표 함수로 변경
         try {
-            const response = await fetch(`http://localhost:4444/users/check?key=${key}&value=${value}`, {
+            const response = await fetch(`${apiUrl}/users/check?key=${key}&value=${value}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -172,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append('profileImage', profileInput.files[0]); // NOTE : 파일 추가
         
         try {
-            const response = await fetch('http://localhost:4444/users/image', {
+            const response = await fetch(`${apiUrl}/users/image`, {
                 method: 'POST',
                 body: formData
             });
@@ -182,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 const result_json = await response.json();
                 const filePath = result_json.filePath.split('/').pop();
-                const imageUrl = `http://localhost:4444/users/image/${filePath}`;
+                const imageUrl = `${apiUrl}/users/image/${filePath}`;
 
                 profileInput.setAttribute('data-image-url', imageUrl);
                 profileIcon.style.backgroundImage = `url(${imageUrl})`;

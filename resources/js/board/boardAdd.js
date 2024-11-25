@@ -1,4 +1,6 @@
-import { uploadImage } from '/js/common/common.js';
+import { uploadImage, fetchConfig } from '/js/common/common.js';
+const config = await fetchConfig();
+const apiUrl = config.apiUrl;
 
 const titleInput = document.getElementById('txt_title');
 const contentInput = document.getElementById('txt_content');
@@ -38,7 +40,7 @@ addButton.addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch('http://localhost:4444/boards', {
+        const response = await fetch(`${apiUrl}/boards`, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json' ,
@@ -65,11 +67,11 @@ const imgUploadElement = document.getElementById('img_upload');
 imgUploadElement.addEventListener('change', async () => {
     if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
 
-    const result = await uploadImage(imgUploadElement, 'http://localhost:4444/boards/image', "boardImage");
+    const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
 
     if (result.success) {
         const filePath = result.filePath.split('/').pop();
-        const imageUrl = `http://localhost:4444/boards/image/${filePath}`;
+        const imageUrl = `${apiUrl}/boards/image/${filePath}`;
 
         imgUploadElement.setAttribute('data-image-url', imageUrl);
         alert(result.message);

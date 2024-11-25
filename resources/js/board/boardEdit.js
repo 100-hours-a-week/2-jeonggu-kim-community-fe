@@ -1,10 +1,11 @@
-import { uploadImage } from '/js/common/common.js';
+import { uploadImage, fetchConfig } from '/js/common/common.js';
 
 const contentHelper = document.getElementById('p_content_helper');
 const titleInput = document.getElementById('txt_title');
 const contentInput = document.getElementById('txt_content');
 const editButton = document.getElementById('btn_board_update');
 const token = localStorage.getItem("token");
+let apiUrl = '';
 
 // NOTE : 제목, 내용 입력 시 등록 버튼 활성화/비활성화 및 색상 변경
 const toggleButtonState = () => {
@@ -22,11 +23,11 @@ titleInput.addEventListener('blur', () => {
 
 contentInput.addEventListener('blur', toggleButtonState);
 
-const getboard_idFromURL = () => new URLSearchParams(window.location.search).get('board_id');
+const getBoardIdFromURL = () => new URLSearchParams(window.location.search).get('board_id');
 
 // NOTE : 페이지 로드 시 게시글 정보 불러오기
 const loadBoardData = async () => {
-    const board_id = getboard_idFromURL();
+    const board_id = getBoardIdFromURL();
     if (!board_id) {
         alert('잘못된 접근입니다.');
         window.history.back();
@@ -34,7 +35,9 @@ const loadBoardData = async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost:4444/boards/${board_id}`, {
+        const config = await fetchConfig();
+        apiUrl = config.apiUrl;
+        const response = await fetch(`${apiUrl}/boards/${board_id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -66,7 +69,7 @@ const displayBoardData = (board) => {
 
 // NOTE : 수정 버튼 클릭 이벤트
 const handleUpdate = async () => {
-    const board_id = getboard_idFromURL();
+    const board_id = getBoardIdFromURL();
     const image_urlInput = document.getElementById('img_upload');
     const title = titleInput.value;
     const content = contentInput.value;
@@ -87,7 +90,7 @@ const handleUpdate = async () => {
     };
 
     try {
-        const response = await fetch(`http://localhost:4444/boards/${board_id}`, {
+        const response = await fetch(`${apiUrl}/boards/${board_id}`, {
             method: 'PUT',
             headers: { 
                 'Content-Type': 'application/json' ,
@@ -113,11 +116,11 @@ const imgUploadElement = document.getElementById('img_upload');
 imgUploadElement.addEventListener('change', async () => {
     if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
             
-    const result = await uploadImage(imgUploadElement, 'http://localhost:4444/boards/image', "boardImage");
+    const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
 
     if (result.success) {
         const filePath = result.filePath.split('/').pop();
-        const imageUrl = `http://localhost:4444/boards/image/${filePath}`;
+        const imageUrl = `${apiUrl}/boards/image/${filePath}`;
         imgUploadElement.setAttribute('data-image-url', imageUrl);
         document.getElementById('file-name-display').textContent = imgUploadElement.files[0]["name"];
         alert(result.message);
