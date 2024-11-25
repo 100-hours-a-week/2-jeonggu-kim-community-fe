@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 
 const path = require('path');
 const app = express();
-const PORT = 5555;
+const PORT = 3000;
 // NOTE : authRoutes와 isAuthenticated 임포트
 
 app.use(express.json());
