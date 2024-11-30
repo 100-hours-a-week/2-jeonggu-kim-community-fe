@@ -302,7 +302,7 @@ const addCommentToList = (comment) => {
     html += `<div class="comment-info">
                 <img class="img_profile" src="${comment.profile_url}">
                 <span class="comment-author">${comment.nickname}</span>
-                <span class="comment-date">${comment.date}</span>
+                <span class="comment-date">${formatDate(comment.date)}</span>
              </div>
              <p class="comment-text">${comment.content}</p>`;
     commentElement.innerHTML = html;
