@@ -1,5 +1,7 @@
-import { fetchConfig } from '/js/common/common.js';
+import { fetchConfig, encodeBase64 } from '/js/common/common.js';
+
 let apiUrl = '';
+
 document.addEventListener('DOMContentLoaded', async () => {
     const config = await fetchConfig();
     apiUrl = config.apiUrl;
@@ -130,12 +132,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = passwordInput.value;
         const nickname = nicknameInput.value;
         const profile_url = document.getElementById('file_profile_url').getAttribute("data-image-url"); // NOTE: 파일 업로드 처리 로직이 추가되어야 함
-        
+        const hashedPassword = encodeBase64(password);
+
         try {
             const response = await fetch(`${apiUrl}/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, nickname, profile_url })
+                body: JSON.stringify({ email, password:hashedPassword, nickname, profile_url })
             });
     
             const result = await response.json();
@@ -157,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cache-Control': 'no-cache', // 캐시 방지
+                    'Cache-Control': 'no-cache',
                 },
             });
             if (!response.ok) {

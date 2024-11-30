@@ -57,3 +57,7 @@ export const fetchConfig = async () => {
         throw error;
     }
 };
+
+export const encodeBase64 = (data) => {
+    return btoa(data);
+};

@@ -1,6 +1,5 @@
-import { fetchConfig } from '/js/common/common.js';
+import { fetchConfig, encodeBase64 } from '/js/common/common.js';
 const config = await fetchConfig();
-const apiUrl = config.apiUrl;
 
 const emailInput = document.getElementById("txt_email");
 const passwordInput = document.getElementById("txt_pwd");
@@ -64,6 +63,7 @@ const validateForm = (isTrue) => {
 loginButton.addEventListener("click", async (event) => {
   const email = emailInput.value.trim();
   const password = passwordInput.value;
+  const hashedPassword = encodeBase64(password);
 
   event.preventDefault();
   
@@ -73,7 +73,7 @@ loginButton.addEventListener("click", async (event) => {
       const response = await fetch(`${config.apiUrl}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password})
+          body: JSON.stringify({ email, password:hashedPassword})
       });
 
       const result = await response.json();
