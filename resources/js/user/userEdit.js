@@ -1,6 +1,5 @@
-import { fetchConfig } from '/js/common/common.js';
-const menuProfileButton = document.querySelector('#btn_profile_menu');
-const menuPasswordButton = document.querySelector('#btn_pwd_menu');
+import { fetchConfig, encodeBase64 } from '/js/common/common.js';
+
 const InfoEditButton = document.getElementById('btn_info_edit');
 const nicknameText = document.getElementById('txt_nickname');
 const passwordEditButton = document.getElementById('btn_pwd_update');
@@ -9,6 +8,7 @@ const profileHelper = document.getElementById('p_content_helper');
 const token = localStorage.getItem("token");
 const config = await fetchConfig();
 const apiUrl = config.apiUrl;
+
 // NOTE : 회원 정보 로딩
 const loadUserInfo = async () => {
     try {
@@ -66,7 +66,9 @@ InfoEditButton.addEventListener('click', async () => {
 // NOTE : 비밀번호 수정
 passwordEditButton.addEventListener('click', async () => {
     try {
-        const passwordInput = document.getElementById("txt_pwd");
+        const password = document.getElementById("txt_pwd").value;
+        const hashedPassword = encodeBase64(password);
+
         const response = await fetch(`${apiUrl}/users`, {
             method: 'PATCH',
             headers: {
@@ -75,7 +77,7 @@ passwordEditButton.addEventListener('click', async () => {
             },
             body: JSON.stringify({ 
                 nickname: '', 
-                password: passwordInput.value
+                password: hashedPassword
             })
         });
 
@@ -89,20 +91,6 @@ passwordEditButton.addEventListener('click', async () => {
         alert('서버 오류가 발생했습니다.');
     }
 });
-
-// // NOTE : 메뉴 회원 정보 수정
-// menuProfileButton.addEventListener('click', (event) => {
-//     event.preventDefault();
-//     document.getElementById('div_pwd_update').style.display = 'none';
-//     document.getElementById('div_profile_section').style.display = 'block';
-// });
-
-// // NOTE : 메뉴 비밀번호 정보 수정
-// menuPasswordButton.addEventListener('click', (event) => {
-//     event.preventDefault();
-//     document.getElementById('div_profile_section').style.display = 'none';
-//     document.getElementById('div_pwd_update').style.display = 'block';
-// });
 
 // NOTE : URL 파라미터에서 type 값을 가져와 특정 섹션 표시
 const urlParams = new URLSearchParams(window.location.search);
