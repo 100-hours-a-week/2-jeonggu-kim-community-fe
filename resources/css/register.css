@@ -70,6 +70,11 @@ input[type="text"] {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover; /* 이미지가 원형을 꽉 채우도록 설정 */
+    background-position: center; /* 이미지 중심을 기준으로 배치 */
+  
+    
     font-size: 2rem;
     color: white;
     margin-top: 10px;
@@ -78,7 +83,6 @@ input[type="text"] {
     background-color: #e74c3c;
 }
 #div_profile {
-    background-size: 149px;
     width: 149px;
     height: 149px;
     gap: 0px;
