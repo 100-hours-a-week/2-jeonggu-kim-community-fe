@@ -1,4 +1,4 @@
-import { fetchConfig, encodeBase64 } from '/js/common/common.js';
+import { fetchConfig, uploadFile, encodeBase64 } from '/js/common/common.js';
 
 let apiUrl = '';
 
@@ -12,9 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordInput = document.getElementById("txt_pwd");
     const confirmPasswordInput = document.getElementById("txt_confirm_pwd");
     const nicknameInput = document.getElementById("txt_nickname");
-    const profileIcon = document.getElementById("div_profile");
+    const profileIcon = document.getElementById("img_profile");
     const profileInput = document.getElementById("file_profile_url");
     const registerButton = document.getElementById("btn_register");
+    const profileText = document.getElementById("spn_profile_txt");
 
     // NOTE: helper 텍스트
     const emailHelper = document.getElementById("email-helper");
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nicknameHelper = document.getElementById("p_nickname");
     const profileHelper = document.getElementById("p_profile");
 
-    document.getElementById("div_profile").addEventListener("click", () => {
+    document.getElementById("img_profile").addEventListener("click", () => {
         if (profileInput.value == "") {
             profileInput.click();
         }
@@ -175,24 +176,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // NOTE : 파일이 선택되면 서버에 업로드
+    /*
     profileInput.addEventListener("change", async function () {
         if (profileInput.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
         
         const formData = new FormData();
         formData.append('profileImage', profileInput.files[0]); // NOTE : 파일 추가
-        
+        formData.append('folderName', "profile");
         try {
-            const response = await fetch(`${apiUrl}/users/image`, {
+            const response = await fetch(`${apiUrl}/images`, {
                 method: 'POST',
-                body: formData
+                body: formData,
             });
     
             if (!response.ok) {
                 throw new Error('파일 업로드에 실패했습니다.');
             } else {
                 const result_json = await response.json();
-                const filePath = result_json.filePath.split('/').pop();
-                const imageUrl = `${apiUrl}/users/image/${filePath}`;
+                const imageUrl = result_json.url;
 
                 profileInput.setAttribute('data-image-url', imageUrl);
                 profileIcon.style.backgroundImage = `url(${imageUrl})`;
@@ -207,5 +208,36 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error('오류:', error);
             profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
         }
+    });
+    */
+    profileInput.addEventListener("change", async function () {
+        if (profileInput.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
+
+        try {
+            const imageUrl = await uploadFile(profileInput.files[0], "profile");
+
+            profileInput.setAttribute('data-image-url', imageUrl);
+            profileIcon.setAttribute("src", imageUrl);
+            
+            profileHelper.textContent = profileInput.files.length > 0 ? "" : "* 프로필 사진을 선택해 주세요";
+            
+            profileIcon.textContent = ""; // NOTE : 기존 텍스트 제거
+            profileText.style.display = "none";
+            alert("파일 업로드에 성공하였습니다.");
+        
+        } catch (error) {
+            console.error('오류:', error);
+            profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
+        }
+    });
+
+    document.getElementById("btn_reupload").addEventListener("click", function () {
+        const fileInput = document.getElementById("file_profile_url");
+        fileInput.value = "";
+    
+        const imgElement = document.getElementById("img_profile");
+        imgElement.src = "";
+    
+        profileText.style.display = "block";
     });
 });

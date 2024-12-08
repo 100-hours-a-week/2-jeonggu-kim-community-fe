@@ -66,10 +66,15 @@ input[type="text"] {
     width: 80px;
     height: 80px;
     background-color: black;
-    border-radius: 50%;
+    clip-path: circle(49%);
     display: flex;
     align-items: center;
     justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover; /* 이미지가 원형을 꽉 채우도록 설정 */
+    background-position: center; /* 이미지 중심을 기준으로 배치 */
+  
+    
     font-size: 2rem;
     color: white;
     margin-top: 10px;
@@ -77,12 +82,19 @@ input[type="text"] {
 .profile-icon:hover {
     background-color: #e74c3c;
 }
-#div_profile {
-    background-size: 149px;
+#img_profile {
     width: 149px;
     height: 149px;
     gap: 0px;
     opacity: 0px;
+}
+.profile-text {
+    position: absolute;
+    margin-top: 125px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    pointer-events: none;
 }
 #h2_register_title {
     /* font-family: Pretendard; */
