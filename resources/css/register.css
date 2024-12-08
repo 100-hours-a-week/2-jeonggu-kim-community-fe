@@ -66,7 +66,7 @@ input[type="text"] {
     width: 80px;
     height: 80px;
     background-color: black;
-    border-radius: 50%;
+    clip-path: circle(49%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,11 +82,19 @@ input[type="text"] {
 .profile-icon:hover {
     background-color: #e74c3c;
 }
-#div_profile {
+#img_profile {
     width: 149px;
     height: 149px;
     gap: 0px;
     opacity: 0px;
+}
+.profile-text {
+    position: absolute;
+    margin-top: 125px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    pointer-events: none;
 }
 #h2_register_title {
     /* font-family: Pretendard; */
