@@ -43,6 +43,33 @@ export const uploadImage = async (fileInput, uploadUrl, imageType) => {
     }
 }
 
+export const uploadFile = async (file, folderName) => {
+    const config = await fetchConfig();
+    const apiUrl = config.apiUrl;
+
+    const formData = new FormData();
+    
+    formData.append('profileImage', file);
+    formData.append('folderName', folderName);
+
+    try {
+        const response = await fetch(`${apiUrl}/images`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('파일 업로드에 실패했습니다.');
+        }
+
+        const resultJson = await response.json();
+        return resultJson.url; // NOTE: 업로드된 파일 URL 반환
+    } catch (error) {
+        console.error('파일 업로드 오류:', error);
+        throw error; // NOTE: 호출한 함수에서 처리하도록 오류 던짐
+    }
+}
+
 // NOTE : 환경 변수
 export const fetchConfig = async () => {
     try {

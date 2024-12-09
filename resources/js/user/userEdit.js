@@ -1,4 +1,4 @@
-import { fetchConfig, encodeBase64 } from '/js/common/common.js';
+import { fetchConfig, uploadFile, encodeBase64 } from '/js/common/common.js';
 
 const InfoEditButton = document.getElementById('btn_info_edit');
 const nicknameText = document.getElementById('txt_nickname');
@@ -172,29 +172,15 @@ document.getElementById("img_profile_url").addEventListener('click', () => {
 
 // NOTE : 파일이 선택되면 서버에 업로드
 profileInput.addEventListener("change", async () => {
-    if (profileInput.files.length === 0) return;
-
-    const formData = new FormData();
-    formData.append('profileImage', profileInput.files[0]);
+    if (profileInput.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
 
     try {
-        const response = await fetch(`${apiUrl}/users/image`, {
-            method: 'POST',
-            body: formData
-        });
-
-        if (!response.ok) {
-            throw new Error('파일 업로드에 실패했습니다.');
-        } else { 
-            const result_json = await response.json();
-            const filePath = result_json.filePath.split('/').pop();
-            const imageUrl = `${apiUrl}/users/image/${filePath}`;
-            
-            
-            document.getElementById('img_profile_url').setAttribute("src",  `${imageUrl}`);
-            profileHelper.textContent = profileInput.files.length > 0 ? "" : "* 프로필 사진을 선택해 주세요";
-            alert("파일 업로드에 성공하였습니다.");
-        }
+        const imageUrl = await uploadFile(profileInput.files[0], "profile");
+        
+        document.getElementById('img_profile_url').setAttribute("src",  `${imageUrl}`);
+        profileHelper.textContent = profileInput.files.length > 0 ? "" : "* 프로필 사진을 선택해 주세요";
+        alert("파일 업로드에 성공하였습니다.");
+    
     } catch (error) {
         console.error('오류:', error);
         profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
