@@ -1,4 +1,4 @@
-import { uploadImage, fetchConfig } from '/js/common/common.js';
+import { uploadFile, fetchConfig } from '/js/common/common.js';
 const config = await fetchConfig();
 const apiUrl = config.apiUrl;
 
@@ -67,15 +67,28 @@ const imgUploadElement = document.getElementById('img_upload');
 imgUploadElement.addEventListener('change', async () => {
     if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
 
-    const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
-
-    if (result.success) {
-        const filePath = result.filePath.split('/').pop();
-        const imageUrl = `${apiUrl}/boards/image/${filePath}`;
-
+    try {
+        const imageUrl = await uploadFile(imgUploadElement.files[0], "board");
         imgUploadElement.setAttribute('data-image-url', imageUrl);
-        alert(result.message);
-    } else {
-        alert(result.message);
+        alert("파일 업로드에 성공하였습니다.");
+    
+    } catch (error) {
+        console.error('오류:', error);
+        alert("파일 업로드에 실패하였습니다.");
     }
+
+    
+    // if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
+
+    // const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
+
+    // if (result.success) {
+    //     const filePath = result.filePath.split('/').pop();
+    //     const imageUrl = `${apiUrl}/boards/image/${filePath}`;
+
+    //     imgUploadElement.setAttribute('data-image-url', imageUrl);
+    //     alert(result.message);
+    // } else {
+    //     alert(result.message);
+    // }
 });

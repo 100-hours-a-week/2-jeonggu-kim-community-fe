@@ -1,4 +1,4 @@
-import { uploadImage, fetchConfig } from '/js/common/common.js';
+import { uploadFile, fetchConfig } from '/js/common/common.js';
 
 const contentHelper = document.getElementById('p_content_helper');
 const titleInput = document.getElementById('txt_title');
@@ -60,10 +60,15 @@ const loadBoardData = async () => {
 
 // NOTE : 데이터를 화면에 표시
 const displayBoardData = (board) => {
-    titleInput.value = board.title;
-    contentInput.value = board.content;
-    document.getElementById('img_upload').setAttribute('data-image-url', board.image_url || '');
-    document.getElementById('file-name-display').textContent = board.image_nm || '선택된 파일 없음';
+    const image_url = board.image_url;
+    const title = board.title;
+    const content = board.content;
+    const image_nm = board.image_nm;
+
+    titleInput.value = title;
+    contentInput.value = content;
+    document.getElementById('img_upload').setAttribute('data-image-url', image_url || '');
+    document.getElementById('file-name-display').textContent = image_nm || '선택된 파일 없음';
     editButton.disabled = false; // NOTE : 수정 버튼 활성화
 };
 
@@ -116,16 +121,15 @@ const imgUploadElement = document.getElementById('img_upload');
 imgUploadElement.addEventListener('change', async () => {
     if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
             
-    const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
-
-    if (result.success) {
-        const filePath = result.filePath.split('/').pop();
-        const imageUrl = `${apiUrl}/boards/image/${filePath}`;
+    try {
+        //const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
+        const imageUrl = await uploadFile(profileInput.files[0], "board");
+        const fileName = imageUrl.split('/').pop();
         imgUploadElement.setAttribute('data-image-url', imageUrl);
-        document.getElementById('file-name-display').textContent = imgUploadElement.files[0]["name"];
-        alert(result.message);
-    } else {
-        alert(result.message);
+        document.getElementById('file-name-display').textContent = fileName;
+    } catch (error) {
+        console.error('오류:', error);
+        profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
     }
 });
 
