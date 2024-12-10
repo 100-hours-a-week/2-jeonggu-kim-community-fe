@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!emailInput.value) {
             emailHelper.textContent = "* 이메일을 입력해주세요.";
         } else if (!emailPattern.test(emailInput.value)) {
-            emailHelper.textContent = "* 올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)";
+            emailHelper.textContent = "* 올바른 이메일 주소 형식을 입력해주세요.\n(예: example@example.com)";
         } else {
             try {
                 const isAvailable = await chkDuplication("email", emailInput.value);
@@ -57,11 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // NOTE: 비밀번호 체크
     passwordInput.addEventListener("blur", () => {
         let isValid = false; // NOTE : (수정) isTrue에서 isValid로 변수명 변경
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[A-Za-z\d\W]{8,20}$/;
         if (!passwordInput.value) {
             passwordHelper.textContent = "* 비밀번호를 입력해 주세요.";
         } else if (!passwordPattern.test(passwordInput.value)) {
-            passwordHelper.textContent = "* 비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.";
+            passwordHelper.textContent = "* 비밀번호는 8자 이상, 20자 이하이며,\n대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.";
         } else {
             passwordHelper.textContent = "";
             isValid = true;
