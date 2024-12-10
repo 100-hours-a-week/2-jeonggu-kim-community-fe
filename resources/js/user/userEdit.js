@@ -121,7 +121,7 @@ passwordInput.addEventListener("blur", () => {
     const passwordHelper = document.getElementById("p_pwd");
 
     let isValid = false;
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[A-Za-z\d\W]{8,20}$/;
     if (!passwordInput.value) {
         passwordHelper.textContent = "* 비밀번호를 입력해 주세요.";
     } else if (!passwordPattern.test(passwordInput.value)) {
