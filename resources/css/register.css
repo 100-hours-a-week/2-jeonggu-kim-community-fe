@@ -122,3 +122,7 @@ input[type="text"] {
 #btn_register:hover {
     background-color: #e74c3c;
 }
+
+#email-helper, #p_pwd {
+    white-space: pre-line; /* NOTE : 줄바꿈 문자 (\n) 인식 설정*/
+}
