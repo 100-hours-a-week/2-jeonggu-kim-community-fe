@@ -1,0 +1,32 @@
+# https://github.com/aws-actions/amazon-ecr-login 참고
+name: Deploy to AWS ECR
+
+on:
+  push:
+    branches:
+      - main # NOTE : main 브랜치에 푸시될 때 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. NOTE : 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. NOTE : AWS CLI 로그인
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # 3. NOTE : Docker 이미지 빌드
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.ECR_REPO_NAME }} .
+          docker tag ${{ secrets.ECR_REPO_NAME }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPO_NAME }}:latest
+
+      # 4. NOTE : Docker 이미지 푸시
+      - name: Push to Amazon ECR
+        run: |
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPO_NAME }}:latest
