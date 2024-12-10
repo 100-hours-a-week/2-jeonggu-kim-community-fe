@@ -58,8 +58,8 @@ const renderBoardInfo = (board) => {
         document.getElementById('div_board_button').style.display = "block";
         document.getElementById('btn_board_confirm').setAttribute('data-board-no', board.board_id);
     }
-    const profile_url = board.profile_url || "../../images/default_profile.png";
-    document.getElementById('img_profile_url').setAttribute("src", profile_url);
+    const profileUrl = board.profile_url || "../../images/default_profile.png";
+    document.getElementById('img_profile_url').setAttribute("src", profileUrl);
     if (board.image_url) {
         document.getElementById('img_url').setAttribute("src", board.image_url);
     }
@@ -121,7 +121,7 @@ const loadComments = async () => {
             
             result.data.forEach(comment => {
                 const commentElement = document.createElement('div');
-                const profile_url = comment.profile_url || "../../images/default_profile.png";
+                const profileUrl = comment.profile_url || "../../images/default_profile.png";
                 commentElement.classList.add('comment');
                 commentElement.setAttribute('data-comment-no', comment.comment_id);
 
@@ -134,7 +134,7 @@ const loadComments = async () => {
                             </div>`;
                 }
                 html += `<div class="comment-info">
-                                <img class="img_profile" src="${profile_url}">
+                                <img class="img_profile" src="${profileUrl}">
                                 <span class="comment-author">${comment.nickname}</span>
                                 <span class="comment-date">${formatDate(comment.reg_dt)}</span>
                         </div>
@@ -292,7 +292,7 @@ const addCommentToList = (comment) => {
     const commentElement = document.createElement('div');
     commentElement.classList.add('comment');
     commentElement.setAttribute('data-comment-no', comment.comment_id);
-
+    const profileUrl = comment.profile_url || "../../images/default_profile.png";
     let html = '';
     html += `<div class="comment-actions">
                 <button class="edit-comment" data-comment-no="${comment.comment_id}">수정</button>
@@ -300,7 +300,7 @@ const addCommentToList = (comment) => {
                 <button class="save-comment" data-comment-no="${comment.comment_id}" style="display:none;">저장</button>
                 </div>`;
     html += `<div class="comment-info">
-                <img class="img_profile" src="${comment.profile_url}">
+                <img class="img_profile" src="${profileUrl}">
                 <span class="comment-author">${comment.nickname}</span>
                 <span class="comment-date">${formatDate(comment.date)}</span>
              </div>
