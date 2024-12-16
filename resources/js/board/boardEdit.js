@@ -123,7 +123,7 @@ imgUploadElement.addEventListener('change', async () => {
             
     try {
         //const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
-        const imageUrl = await uploadFile(profileInput.files[0], "board");
+        const imageUrl = await uploadFile(imgUploadElement.files[0], "board");
         const fileName = imageUrl.split('/').pop();
         imgUploadElement.setAttribute('data-image-url', imageUrl);
         document.getElementById('file-name-display').textContent = fileName;
