@@ -130,7 +130,7 @@ passwordInput.addEventListener("blur", () => {
         passwordHelper.textContent = "";
         isValid = true;
     }
-    validateForm(isValid);
+    validateForm(isValid, "password");
 });
 
 // NOTE: 비밀번호 확인 체크
@@ -147,21 +147,31 @@ confirmPasswordInput.addEventListener("blur", () => {
         confirmPasswordHelper.textContent = "";
         isValid = true;
     }
-    validateForm(isValid);
+    validateForm(isValid, "password");
 });
 
 // NOTE: 수정하기 버튼 활성화
-const validateForm = (isValid) => {
+const validateForm = (isValid, type) => {
     const confirmPasswordHelper = document.getElementById("p_confirm_pwd");
     const passwordHelper = document.getElementById("p_pwd");
-    if (isValid 
-    &&  passwordHelper.textContent.trim() === ''
-    &&  confirmPasswordHelper.textContent.trim() === '') {
-        passwordEditButton.disabled = false;
-        passwordEditButton.style.cursor = "pointer";
-    } else {
-        passwordEditButton.disabled = true;
-        passwordEditButton.style.cursor = "not-allowed";
+    const infoButton = document.getElementById("btn_info_edit");
+
+    if(type == "password"){
+        if (!isValid 
+        &&  passwordHelper.textContent.trim() === ''
+        &&  confirmPasswordHelper.textContent.trim() === '') {
+            passwordEditButton.disabled = false;
+            passwordEditButton.style.cursor = "pointer";
+        } else {
+            passwordEditButton.disabled = true;
+            passwordEditButton.style.cursor = "not-allowed";
+        }
+    } else if(type == "nickname"){
+        if(!isValid){
+            infoButton.disabled = true;
+        } else{
+            infoButton.disabled = false;
+        }
     }
 };
 
@@ -215,6 +225,55 @@ document.getElementById("btn_user_confirm").addEventListener('click', async () =
         console.error('Error deleting user:', error);
         alert('서버 오류가 발생했습니다.');
     }
+});
+
+const chkDuplication = async (key, value) => { // NOTE : (수정) function()에서 화살표 함수로 변경
+    try {
+        const response = await fetch(`${apiUrl}/users/check`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ 
+                key: key, 
+                value: value
+            })
+        });
+        if (!response.ok) {
+            throw new Error('사용자 조회 실패');
+        }
+
+        const users = await response.json();
+        return users.data["success"];
+    } catch (error) {
+        console.error('Error fetching users:', error);
+    }
+}
+
+nicknameText.addEventListener("blur", async () => {
+    let isValid = false; // NOTE : (수정) isTrue에서 isValid로 변수명 변경
+    const nicknamePattern = /^[^\s]{1,10}$/;
+    if (!nicknameText.value) {
+        profileHelper.textContent = "* 닉네임을 입력해 주세요.";
+    } else if (/\s/.test(nicknameText.value)) {
+        profileHelper.textContent = "* 닉네임에 띄어쓰기를 사용하지 마세요.";
+    } else if (!nicknamePattern.test(nicknameText.value)) {
+        profileHelper.textContent = "* 닉네임은 최대 10자까지 작성 가능합니다.";
+    } else {
+        try {
+            const isAvailable = await chkDuplication("nickname", nicknameText.value);
+            if (!isAvailable) {
+                profileHelper.textContent = "* 이미 사용 중인 닉네임입니다.";
+            } else {
+                profileHelper.textContent = ""; // NOTE: 사용 가능한 닉네임
+                isValid = true;
+            }
+        } catch (error) {
+            profileHelper.textContent = "* 닉네임 중복 확인에 실패했습니다.";
+        }
+    }
+    validateForm(isValid, "nickname");
 });
 
 loadUserInfo();
