@@ -81,7 +81,7 @@ loginButton.addEventListener("click", async (event) => {
           alert("로그인에 성공하였습니다.");
           window.location.href = '/board';
       } else{
-        alert("로그인에 실패했습니다.");
+        alert("아이디와 비밀번호가 일치하지 않습니다.");
       }
     } catch (error) {
         alert("서버 오류가 발생했습니다.");
