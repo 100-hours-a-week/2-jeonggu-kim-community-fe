@@ -6,6 +6,7 @@
     bottom: 0;
     width: 100%;
     font-size: 14px;
+    z-index: -1;
 }
 
 .footer-container {
