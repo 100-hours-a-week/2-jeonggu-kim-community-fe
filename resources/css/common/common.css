@@ -75,14 +75,6 @@ body {
     /* background-color: #4466ff;
     border: none; */
 }
-.cursor-dot {
-    width: 10px; /* 점 크기 */
-    height: 10px;
-    background-color: #4466ff; /* 점 색상 */
-    border-radius: 50%;
-    position: absolute;
-    pointer-events: none; /* 점이 클릭 이벤트에 영향을 주지 않음 */
-}
 
 main {
     margin: 0 auto;
