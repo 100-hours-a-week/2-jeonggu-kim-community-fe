@@ -16,7 +16,6 @@ emailInput.addEventListener("blur", function () {
   
   if (!emailInput.value) {
       helperText.textContent = "* 이메일을 입력해 주세요.";
-      isEmailValid = false;
     } else if(!emailRegex.test(emailInput.value.trim())) {
       helperText.textContent = "* 올바른 이메일 주소 형식을 입력해 주세요.";
   } else {
