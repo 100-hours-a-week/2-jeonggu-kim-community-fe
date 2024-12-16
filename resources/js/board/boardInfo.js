@@ -35,6 +35,8 @@ const loadBoardInfo = async () => {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`, // NOTE : JWT를 Authorization 헤더에 추가
+                CurrentPage: `${window.location.href}`,
+                Authorization: `Bearer ${token}`, // NOTE : JWT를 Authorization 헤더에 추가
             },
         });
 
