@@ -30,11 +30,9 @@ const loadBoardInfo = async () => {
     try {
         // addViewCount가 완료된 후 fetch 요청 실행
         await addViewCount(board_id); 
-
         const response = await fetch(`${apiUrl}/boards/${board_id}`, {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`, // NOTE : JWT를 Authorization 헤더에 추가
                 CurrentPage: `${window.location.href}`,
                 Authorization: `Bearer ${token}`, // NOTE : JWT를 Authorization 헤더에 추가
             },
@@ -334,17 +332,29 @@ const toggleEditComment = (commentElement, comment) => {
         inputElement.dataset.commentNo = comment.comment_id;
         commentTextElement.replaceWith(inputElement);
         
+
         // NOTE : 저장 버튼 추가
-        const commentElement = document.querySelector(`.save-comment[data-comment-no="${comment.comment_id}"]`);
-        if (commentElement) {
-            commentElement.style.display = "block" // 해당 댓글 요소 제거
+        const commentSaveElement = document.querySelector(`.save-comment[data-comment-no="${comment.comment_id}"]`);
+        if (commentSaveElement) {
+            commentSaveElement.style.display = "block"
         }
+
+        const commentEditElement = document.querySelector(`.edit-comment[data-comment-no="${comment.comment_id}"]`);
+        if (commentEditElement) {
+            commentEditElement.innerHTML = "초기화"
+        }
+
     }
 }
 
 // NOTE : 댓글 저장
 async function saveEditedComment(comment_id){
     const newContent = document.querySelector(`.comment-text[data-comment-no="${comment_id}"]`);
+    if(newContent.value == ""){
+       alert("댓글 내용을 입력해주세요."); 
+       return;
+    }
+    
     try {
         // NOTE : 서버에 PATCH 요청으로 댓글 수정 내용 전송
         const response = await fetch(`${apiUrl}/comments/${comment_id}`, {
@@ -370,6 +380,11 @@ async function saveEditedComment(comment_id){
             }
             
             alert('댓글이 수정되었습니다.');
+
+            const commentEditElement = document.querySelector(`.edit-comment[data-comment-no="${comment_id}"]`);
+            if (commentEditElement) {
+                commentEditElement.innerHTML = "수정"
+            }
         } else {
             alert('댓글 수정에 실패했습니다.');
         }

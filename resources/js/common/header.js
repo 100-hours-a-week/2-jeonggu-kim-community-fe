@@ -98,11 +98,5 @@ function setupHeaderEvents() {
     }
 }
 
-const cursorDot = document.querySelector('.cursor-dot');
-document.addEventListener('mousemove', (event) => {
-    cursorDot.style.left = `${event.clientX}px`; // X 좌표 업데이트
-    cursorDot.style.top = `${event.clientY}px`;  // Y 좌표 업데이트
-});
-
 // 페이지 로드 시 헤더 생성
 document.addEventListener('DOMContentLoaded', createHeader);
