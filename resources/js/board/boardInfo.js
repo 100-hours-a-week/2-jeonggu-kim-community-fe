@@ -328,6 +328,7 @@ const toggleEditComment = (commentElement, comment) => {
         inputElement.type = 'text';
         inputElement.value = currentText;
         inputElement.classList.add('comment-text');
+        inputElement.maxLength = 100;
         inputElement.dataset.commentNo = comment.comment_id;
         commentTextElement.replaceWith(inputElement);
         
