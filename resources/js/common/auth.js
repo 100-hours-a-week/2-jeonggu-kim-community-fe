@@ -1,5 +1,5 @@
 import { fetchConfig } from '/js/common/common.js';
-const publicPages = ['/login', '/register']; // NOTE : 로그인이 필요 없는 페이지
+const publicPages = ['/login', '/register', '/board']; // NOTE : 로그인이 필요 없는 페이지
 const config = await fetchConfig();
 const apiUrl = config.apiUrl;
 
@@ -25,7 +25,7 @@ const checkAuthentication = async () => {
         if (!response.ok) {
             const errorData = await response.json();
             console.error('에러 메시지:', errorData.message);
-            alert(errorData.message);
+            alert("로그인 후 이용해주세요.");
             window.location.href = "/login";
             return false;
         }
@@ -38,15 +38,15 @@ const checkAuthentication = async () => {
     }
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
+(async () => {
     if (!publicPages.includes(window.location.pathname)) {
         const isAuthenticated = await checkAuthentication();
         if (!isAuthenticated) {
             window.location.href = "/login";
-            return; 
+            return;
         }
     }
-});
+})();
 
 // NOTE : 뒤로가기 실행시에도 인증 확인하기 위해
 window.addEventListener('pageshow', (event) => {
