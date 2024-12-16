@@ -59,7 +59,7 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    cursor: url("../../images/cloud-icon-v.1.png"), auto;
+    cursor: url(../../images/cloud-icon-v.1.png) 25 25, auto;
 }
 body {
     display: flex;
