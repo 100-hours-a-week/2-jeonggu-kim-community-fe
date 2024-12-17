@@ -7,7 +7,6 @@ function createHeader() {
     }
     headerHTML += `<h2>Jeonggu.kim's BOARD</h2>`;
     // NOTE : 조건에 따라 headerHTML 추가
-    console.log(currentUrl);
     if (currentUrl !== ("login") && currentUrl !== ("register") && currentUrl !== ("")) {
         headerHTML += `<!-- NOTE : profile menu -->
                 <div class="profile-container">
