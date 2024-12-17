@@ -157,7 +157,7 @@ const validateForm = (isValid, type) => {
     const infoButton = document.getElementById("btn_info_edit");
 
     if(type == "password"){
-        if (!isValid 
+        if (isValid 
         &&  passwordHelper.textContent.trim() === ''
         &&  confirmPasswordHelper.textContent.trim() === '') {
             passwordEditButton.disabled = false;
@@ -167,10 +167,10 @@ const validateForm = (isValid, type) => {
             passwordEditButton.style.cursor = "not-allowed";
         }
     } else if(type == "nickname"){
-        if(!isValid){
-            infoButton.disabled = true;
-        } else{
+        if(isValid){
             infoButton.disabled = false;
+        } else{
+            infoButton.disabled = true;
         }
     }
 };
