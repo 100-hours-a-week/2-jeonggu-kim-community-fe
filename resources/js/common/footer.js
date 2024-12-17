@@ -3,8 +3,8 @@ function createFooter() {
         <div class="footer-container">
             <p>&copy; 2024 Jeonggu.kim. All Rights Reserved.</p>
             <ul class="footer-links">
-                <li><a href="https://github.com/jeonggu0112/2-jeonggu-kim-community-be">About</a></li>
-                <li><a href="">Contact</a></li>
+                <li><a href="https://github.com/dev-jeonggu/2-jeonggu-kim-community-fe">About</a></li>
+                <li><a href="mailto:dev.jeonggu@gmail.com?subject=Contact%20Us">Contact</a></li>
             </ul>
         </div>
     `;
