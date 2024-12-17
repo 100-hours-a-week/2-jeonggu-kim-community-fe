@@ -217,7 +217,7 @@ document.getElementById("btn_user_confirm").addEventListener('click', async () =
         if (response.ok) {
             alert(result.message);
             localStorage.removeItem('token');
-            window.location.href = '/login';
+            window.location.href = '/';
         } else {
             alert(result.message || '회원 삭제에 실패했습니다.');
         }

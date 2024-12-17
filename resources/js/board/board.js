@@ -75,12 +75,12 @@ const loadBoardList = async (searchKey = "", searchValue = "") => {
             renderBoardList(result.data); // NOTE : 성공 시 게시글 렌더링
         } else {
             alert('게시글 목록을 불러오는 데 실패했습니다.');
-            window.location.replace("/login"); 
+            window.location.replace("/"); 
         }
     } catch (error) {
         console.error('Error loading board list:', error);
         alert('서버 오류가 발생했습니다.');
-        window.location.replace("/login"); 
+        window.location.replace("/"); 
         //window.history.back();
     }
 };
