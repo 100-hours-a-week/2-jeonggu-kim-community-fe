@@ -63,6 +63,10 @@ const renderBoardInfo = (board) => {
     if (board.image_url) {
         document.getElementById('img_url').setAttribute("src", board.image_url);
     }
+    if(board.isChange) {
+        document.getElementById("span_board_chg").style.display = "block";
+        document.getElementById("span_board_chg").setAttribute('data-chg-time', formatDate(board.chg_dt));
+    }
     document.getElementById('h2_section_title').textContent = board.title;
     document.getElementById('span_board_author').textContent = board.nickname;
     document.getElementById('span_board_dt').textContent = formatDate(board.date);
@@ -136,8 +140,11 @@ const loadComments = async () => {
                 html += `<div class="comment-info">
                                 <img class="img_profile" src="${profileUrl}">
                                 <span class="comment-author">${comment.nickname}</span>
-                                <span class="comment-date">${formatDate(comment.reg_dt)}</span>
-                        </div>
+                                <span class="comment-date">${formatDate(comment.reg_dt)}</span>`;
+                if (comment.isChange) {
+                    html += `<span class="board-change" data-chg-time="${formatDate(comment.chg_dt)}">(수정됨)</span>`
+                }
+                html += `</div>
                         <p class="comment-text">${comment.content}</p>`;
                 commentElement.innerHTML = html;
                 if(comment.isAuthor) {
@@ -331,7 +338,6 @@ const toggleEditComment = (commentElement, comment) => {
         inputElement.maxLength = 100;
         inputElement.dataset.commentNo = comment.comment_id;
         commentTextElement.replaceWith(inputElement);
-        
 
         // NOTE : 저장 버튼 추가
         const commentSaveElement = document.querySelector(`.save-comment[data-comment-no="${comment.comment_id}"]`);
@@ -343,7 +349,6 @@ const toggleEditComment = (commentElement, comment) => {
         if (commentEditElement) {
             commentEditElement.innerHTML = "초기화"
         }
-
     }
 }
 
@@ -383,7 +388,13 @@ async function saveEditedComment(comment_id){
 
             const commentEditElement = document.querySelector(`.edit-comment[data-comment-no="${comment_id}"]`);
             if (commentEditElement) {
-                commentEditElement.innerHTML = "수정"
+                commentEditElement.innerHTML = "수정" 
+            }
+
+            const commentDate = document.querySelector(`[data-comment-no="${comment_id}"] .comment-date`)
+            if(commentDate)
+            {
+                commentDate.insertAdjacentHTML('afterend', '<span class="board-change">(수정됨)</span>');
             }
         } else {
             alert('댓글 수정에 실패했습니다.');

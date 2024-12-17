@@ -9,7 +9,7 @@ const checkAuthentication = async () => {
     
     if (!token) {
         alert('로그인이 필요합니다.');
-        window.location.href = "/login";
+        window.location.href = "/";
         return false; 
     }
 
@@ -26,14 +26,14 @@ const checkAuthentication = async () => {
             const errorData = await response.json();
             console.error('에러 메시지:', errorData.message);
             alert("로그인 후 이용해주세요.");
-            window.location.href = "/login";
+            window.location.href = "/";
             return false;
         }
         return true;
     } catch (error) {
         console.error('요청 중 오류 발생:', error);
         alert('서버에 연결할 수 없습니다.');
-        window.location.href = "/login";
+        window.location.href = "/";
         return false; 
     }
 };
@@ -42,7 +42,7 @@ const checkAuthentication = async () => {
     if (!publicPages.includes(window.location.pathname)) {
         const isAuthenticated = await checkAuthentication();
         if (!isAuthenticated) {
-            window.location.href = "/login";
+            window.location.href = "/";
             return;
         }
     }

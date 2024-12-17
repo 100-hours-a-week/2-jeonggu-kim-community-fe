@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
             if (response.ok) {
                 alert("회원가입이 성공적으로 완료되었습니다.");
-                window.location.href = "/login";
+                window.location.href = "/";
             } else {
                 alert(result.message || "회원가입에 실패했습니다.");
             }
