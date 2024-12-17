@@ -274,6 +274,30 @@ input.comment-text {
     margin-left: 24px;
 }
 
+.board-change {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.board-change::after {
+    content: attr(data-chg-time); /* data-chg-time 속성의 값 표시 */
+    position: absolute;
+    top: 50%; /* 요소 중앙에 맞추기 */
+    left: 100%; /* 요소 오른쪽에 표시 */
+    transform: translateY(-50%);
+    background-color: #333; /* 툴팁 배경색 */
+    color: #fff; /* 툴팁 글자색 */
+    padding: 5px 8px;
+    border-radius: 5px;
+    white-space: nowrap; /* 줄 바꿈 방지 */
+    font-size: 12px;
+    display: none; /* 기본적으로 숨김 */
+    z-index: 100; /* 다른 요소 위에 표시 */
+}
+
 .board-button {
     width: 50px;
     height: 27px;
@@ -287,6 +311,11 @@ input.comment-text {
     border: 0px;
     color: white;
 }
+
+.board-change:hover::after {
+    display: block;
+}
+
 .board-button:hover {
     background-color: #e74c3c;
 }
