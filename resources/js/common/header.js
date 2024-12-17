@@ -2,12 +2,13 @@
 function createHeader() {
     const currentUrl = window.location.href.split('/').pop();
     let headerHTML = ``;
-    if (currentUrl !== ("login")) {
+    if (currentUrl !== ("login") && currentUrl !== ("")) {
         headerHTML += `<div><img class="back-icon" src="/images/back_icon.png" alt="뒤로가기"></div>`;
     }
     headerHTML += `<h2>Jeonggu.kim's BOARD</h2>`;
-    // 조건에 따라 headerHTML 추가
-    if (currentUrl !== ("login") && currentUrl !== ("register")) {
+    // NOTE : 조건에 따라 headerHTML 추가
+    console.log(currentUrl);
+    if (currentUrl !== ("login") && currentUrl !== ("register") && currentUrl !== ("")) {
         headerHTML += `<!-- NOTE : profile menu -->
                 <div class="profile-container">
                     <div class="profile-icon"><img class="width-40" src="/images/cloud-icon-v.2.png" alt="프로필"></div>
