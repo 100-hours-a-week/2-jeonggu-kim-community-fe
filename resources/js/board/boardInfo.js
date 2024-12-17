@@ -23,7 +23,7 @@ const loadBoardInfo = async () => {
     
     if (!board_id) {
         alert('게시글 번호가 존재하지 않습니다.');
-        history.back(); // NOTE : 이전 페이지로 이동
+        window.location.replace("/board"); 
         return;
     }
 
@@ -44,12 +44,12 @@ const loadBoardInfo = async () => {
             renderBoardInfo(result.data); // NOTE : 데이터가 있으면 렌더링
         } else {
             alert('게시글 정보를 불러오는 데 실패했습니다.');
-            history.back(); // NOTE : 이전 페이지로 이동
+            window.location.replace("/board"); 
         }
     } catch (error) {
         console.error('Error loading board info:', error);
         alert('서버 오류가 발생했습니다.');
-        history.back(); // NOTE : 이전 페이지로 이동
+        window.location.replace("/board"); 
     }
 };
 
@@ -99,7 +99,7 @@ const loadComments = async () => {
     
     if (!board_id) {
         alert('게시글 번호가 존재하지 않습니다.');
-        history.back(); // NOTE : 이전 페이지로 이동
+        window.location.replace("/board"); 
         return;
     }
 

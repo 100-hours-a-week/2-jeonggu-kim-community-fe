@@ -1,5 +1,5 @@
 import { fetchConfig } from '/js/common/common.js';
-const publicPages = ['/login', '/register', '/board']; // NOTE : 로그인이 필요 없는 페이지
+const publicPages = ['/login', '/register', '/board', '/']; // NOTE : 로그인이 필요 없는 페이지
 const config = await fetchConfig();
 const apiUrl = config.apiUrl;
 

@@ -30,7 +30,7 @@ const loadBoardData = async () => {
     const board_id = getBoardIdFromURL();
     if (!board_id) {
         alert('잘못된 접근입니다.');
-        window.history.back();
+        window.location.replace("/board"); 
         return;
     }
 
@@ -49,12 +49,12 @@ const loadBoardData = async () => {
             displayBoardData(result.data);
         } else {
             alert('게시글을 찾을 수 없습니다.');
-            window.history.back();
+            window.location.replace("/board"); 
         }
     } catch (error) {
         console.error('Error loading board data:', error);
         alert('서버 오류가 발생했습니다.');
-        window.history.back();
+        window.location.replace("/board"); 
     }
 };
 
