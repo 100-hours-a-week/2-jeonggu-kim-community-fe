@@ -59,7 +59,6 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    cursor: url(../../images/cloud-icon-v.1.png) 25 25, auto;
 }
 body {
     display: flex;
@@ -72,6 +71,7 @@ body {
     background-position: center; /* 이미지 가운데 정렬 */
     background-repeat: no-repeat; /* 반복 제거 */
     background-attachment: fixed; /* 배경 고정 (선택 사항) */
+    cursor: url(../../images/cloud-icon-v.1.png) 25 25, auto;
     /* background-color: #4466ff;
     border: none; */
 }

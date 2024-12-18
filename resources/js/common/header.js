@@ -117,5 +117,29 @@ function setupHeaderEvents() {
     }
 }
 
-// 페이지 로드 시 헤더 생성
+// NOTE : 페이지 로드 시 헤더 생성
 document.addEventListener('DOMContentLoaded', createHeader);
+
+
+// NOTE : 파일 취소를 진행할 때 마우스 커서 풀리는 부분 관련 적용
+const fileInputs = document.querySelectorAll('input[type="file"]');
+
+fileInputs.forEach(fileInput => {
+    fileInput.addEventListener('click', () => {
+        document.body.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+        fileInput.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (!fileInput.value) {
+            document.body.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+            fileInput.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+        }
+    });
+});
+window.addEventListener('focus', () => {
+    document.body.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+    fileInputs.forEach(fileInput => {
+        fileInput.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+    });
+});
