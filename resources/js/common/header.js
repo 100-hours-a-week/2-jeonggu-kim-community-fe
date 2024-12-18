@@ -61,6 +61,25 @@ function setupHeaderEvents() {
     // NOTE: 뒤로가기 버튼 클릭 시
     if (backIcon) {
         backIcon.addEventListener("click", () => {
+            const currentUrl = window.location.href;
+            const data = window.location.href.split("?");
+
+            const routes = {
+                register: "/",
+                boardInfo: "/board",
+                boardAdd: "/board",
+                userEdit: "/board",
+                boardEdit: "/boardInfo" + "?" + data[1],
+            };
+    
+            for (const key in routes) {
+                if (currentUrl.includes(key)) {
+                    window.location.href = routes[key];
+                    return;
+                }
+            }
+    
+            // NOTE : 조건에 맞는 경로가 없으면 기본 뒤로 가기
             window.history.back();
         });
     }
