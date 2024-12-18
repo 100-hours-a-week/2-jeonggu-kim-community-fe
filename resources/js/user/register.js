@@ -194,9 +194,15 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 const result_json = await response.json();
                 const imageUrl = result_json.url;
+        if (profileInput.files[0].name > 100){
+            alert("이미지 파일의 이름이 100자 이하인 파일로 등록해주세요.");
+        } else{
+            try {
+                const imageUrl = await uploadFile(profileInput.files[0], "profile");
 
                 profileInput.setAttribute('data-image-url', imageUrl);
                 profileIcon.style.backgroundImage = `url(${imageUrl})`;
+                profileIcon.setAttribute("src", imageUrl);
                 
                 profileHelper.textContent = profileInput.files.length > 0 ? "" : "* 프로필 사진을 선택해 주세요";
                 
@@ -228,6 +234,10 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
             console.error('오류:', error);
             profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
+            } catch (error) {
+                console.error('오류:', error);
+                profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
+            }
         }
     });
 

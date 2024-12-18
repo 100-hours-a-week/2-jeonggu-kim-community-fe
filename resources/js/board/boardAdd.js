@@ -66,29 +66,18 @@ addButton.addEventListener("click", async () => {
 const imgUploadElement = document.getElementById('img_upload');
 imgUploadElement.addEventListener('change', async () => {
     if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
+    if (imgUploadElement.files[0].name > 100){
+        alert("이미지 파일의 이름이 100자 이하인 파일로 등록해주세요.");
+    } else{
 
-    try {
-        const imageUrl = await uploadFile(imgUploadElement.files[0], "board");
-        imgUploadElement.setAttribute('data-image-url', imageUrl);
-        alert("파일 업로드에 성공하였습니다.");
-    
-    } catch (error) {
-        console.error('오류:', error);
-        alert("파일 업로드에 실패하였습니다.");
+        try {
+            const imageUrl = await uploadFile(imgUploadElement.files[0], "board");
+            imgUploadElement.setAttribute('data-image-url', imageUrl);
+            alert("파일 업로드에 성공하였습니다.");
+            
+        } catch (error) {
+            console.error('오류:', error);
+            alert("파일 업로드에 실패하였습니다.");
+        }
     }
-
-    
-    // if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
-
-    // const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
-
-    // if (result.success) {
-    //     const filePath = result.filePath.split('/').pop();
-    //     const imageUrl = `${apiUrl}/boards/image/${filePath}`;
-
-    //     imgUploadElement.setAttribute('data-image-url', imageUrl);
-    //     alert(result.message);
-    // } else {
-    //     alert(result.message);
-    // }
 });
