@@ -61,6 +61,25 @@ function setupHeaderEvents() {
     // NOTE: 뒤로가기 버튼 클릭 시
     if (backIcon) {
         backIcon.addEventListener("click", () => {
+            const currentUrl = window.location.href;
+            const data = window.location.href.split("?");
+
+            const routes = {
+                register: "/",
+                boardInfo: "/board",
+                boardAdd: "/board",
+                userEdit: "/board",
+                boardEdit: "/boardInfo" + "?" + data[1],
+            };
+    
+            for (const key in routes) {
+                if (currentUrl.includes(key)) {
+                    window.location.href = routes[key];
+                    return;
+                }
+            }
+    
+            // NOTE : 조건에 맞는 경로가 없으면 기본 뒤로 가기
             window.history.back();
         });
     }
@@ -98,5 +117,29 @@ function setupHeaderEvents() {
     }
 }
 
-// 페이지 로드 시 헤더 생성
+// NOTE : 페이지 로드 시 헤더 생성
 document.addEventListener('DOMContentLoaded', createHeader);
+
+
+// NOTE : 파일 취소를 진행할 때 마우스 커서 풀리는 부분 관련 적용
+const fileInputs = document.querySelectorAll('input[type="file"]');
+
+fileInputs.forEach(fileInput => {
+    fileInput.addEventListener('click', () => {
+        document.body.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+        fileInput.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (!fileInput.value) {
+            document.body.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+            fileInput.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+        }
+    });
+});
+window.addEventListener('focus', () => {
+    document.body.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+    fileInputs.forEach(fileInput => {
+        fileInput.style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
+    });
+});

@@ -30,7 +30,7 @@ const loadBoardData = async () => {
     const board_id = getBoardIdFromURL();
     if (!board_id) {
         alert('잘못된 접근입니다.');
-        window.location.replace("/board"); 
+        window.location.replace("/board");
         return;
     }
 
@@ -60,15 +60,22 @@ const loadBoardData = async () => {
 
 // NOTE : 데이터를 화면에 표시
 const displayBoardData = (board) => {
+    const maxLength = 15
     const image_url = board.image_url;
     const title = board.title;
     const content = board.content;
     const image_nm = board.image_nm;
-
+    const image_form = board.image_nm.split(".").pop();
+    let image_split = image_nm;
+    if (image_nm.length > maxLength){
+        image_split = image_split.slice(0, maxLength) + "..." + image_form;
+    }
     titleInput.value = title;
     contentInput.value = content;
     document.getElementById('img_upload').setAttribute('data-image-url', image_url || '');
-    document.getElementById('file-name-display').textContent = image_nm || '선택된 파일 없음';
+
+    document.getElementById('file-name-display').setAttribute('data-image-nm', image_nm);
+    document.getElementById('file-name-display').textContent = image_split || '선택된 파일 없음';
     editButton.disabled = false; // NOTE : 수정 버튼 활성화
 };
 
@@ -90,7 +97,7 @@ const handleUpdate = async () => {
         content,
         ...(image_urlInput.files[0] && {
             image_url: img_url,
-            image_nm: document.getElementById('file-name-display').textContent
+            image_nm: document.getElementById('file-name-display').getAttribute('data-image-nm')
         })
     };
 
@@ -119,17 +126,28 @@ const handleUpdate = async () => {
 
 const imgUploadElement = document.getElementById('img_upload');
 imgUploadElement.addEventListener('change', async () => {
+    const maxLength = 15;
     if (imgUploadElement.files.length === 0) return; // NOTE : 파일이 선택되지 않은 경우 종료
+    if (imgUploadElement.files[0].name > 100){
+        alert("이미지 파일의 이름이 100자 이하인 파일로 등록해주세요.");
+    } else{
+        try {
+            const imageUrl = await uploadFile(imgUploadElement.files[0], "board");
+            const fileName = imageUrl.split('/').pop();
+            const image_form = fileName.split(".").pop();
+            let image_split = fileName;
+
+            if (fileName.length > maxLength){
+                image_split = image_split.slice(0, maxLength) + "..." + image_form;
+            }
             
-    try {
-        //const result = await uploadImage(imgUploadElement, `${apiUrl}/boards/image`, "boardImage");
-        const imageUrl = await uploadFile(imgUploadElement.files[0], "board");
-        const fileName = imageUrl.split('/').pop();
-        imgUploadElement.setAttribute('data-image-url', imageUrl);
-        document.getElementById('file-name-display').textContent = fileName;
-    } catch (error) {
-        console.error('오류:', error);
-        profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
+            imgUploadElement.setAttribute('data-image-url', imageUrl);
+            document.getElementById('file-name-display').setAttribute("data-image-nm", fileName);
+            document.getElementById('file-name-display').textContent = image_split;
+        } catch (error) {
+            console.error('오류:', error);
+            profileHelper.textContent = "* 파일 업로드 중 오류가 발생했습니다.";
+        }
     }
 });
 
