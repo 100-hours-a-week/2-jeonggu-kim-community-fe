@@ -47,6 +47,16 @@
         </div>
     </main>
     <footer class="footer" id="footer"></footer>
+    <script>
+        window.addEventListener('load', () => {
+            const highResImage = "../../images/blue-back-v.1.jpg";
+            const img = new Image();
+            img.src = highResImage;
+            img.onload = () => {
+                document.body.style.backgroundImage = `url(${highResImage})`;
+            };
+        });
+    </script>
     <script src="/js/common/auth.js" type="module"></script>
     <script src="/js/common/header.js" defer></script>
     <script src="/js/board/board.js" type="module"></script>
