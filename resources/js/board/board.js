@@ -20,7 +20,6 @@ const renderBoardList = async (boardList) => {
         // NOTE : 하나씩 렌더링하는 효과를 위해 100ms 대기
         await new Promise((resolve) => setTimeout(resolve, 100));
     }
-    currentPage++;
 };
 
 const createBoardElement = (post) => {
@@ -121,6 +120,7 @@ const handleResponse = (result) => {
     if (result.message === 'success' && result.data) {
         renderBoardList(result.data);
         hasMore = result.hasMore;
+        currentPage++;
     } else {
         alert('게시글 목록을 불러오는 데 실패했습니다.');
 
