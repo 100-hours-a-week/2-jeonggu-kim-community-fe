@@ -64,6 +64,15 @@ app.get('/config', (req, res) => {
         res.json({ apiUrl });
     }
 });
+
+// 정적 파일 제공 및 캐시 설정
+app.use(
+    "/resources/images",
+    express.static(path.join(__dirname, "resources/images"), {
+      maxAge: "30d", 
+    })
+  );
+
 // NOTE : 서버 시작
 app.listen(PORT, () => {
     console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
