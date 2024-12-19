@@ -36,13 +36,16 @@
                 <button class="write-board-button" id="btn_board_add">게시글 작성</button>
             </div>
         </div>
-        <!-- NOTE : board section -->
-        <section class="board-list">
-            <!-- NOTE : 추후에 각각의 게시글 관리하기 위해 data-board_id 추가-->
-        </section>
+        <div id="board-list-containner">
+            <!-- NOTE : board section -->
+            <section class="board-list">
+                <!-- NOTE : 추후에 각각의 게시글 관리하기 위해 data-board_id 추가-->
+            </section>
+            <!-- NOTE : 하단 감지 요소 -->
+            <div class="scroll-sentinel" id="scroll-sentinel"></div>
+        </div>
     </main>
     <footer class="footer" id="footer"></footer>
-
     <script src="/js/common/auth.js" type="module"></script>
     <script src="/js/common/header.js" defer></script>
     <script src="/js/board/board.js" type="module"></script>

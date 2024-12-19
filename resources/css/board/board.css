@@ -233,3 +233,30 @@ margin-left: 5px;
 .dropdown-menu.show {
     display: block; /* 드롭다운이 보이도록 설정 */
 }
+.loader {
+    background-image: url('../../images/infinity-scroll.v.1.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100px;
+    height: 50px; 
+    margin: auto;
+}
+.scroll-sentinel {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100%;
+    height: 50px;
+    opacity: 0; /* 처음에는 숨김 */
+    animation: fadeIn 1s forwards; /* 3초에 걸쳐 나타남 */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
