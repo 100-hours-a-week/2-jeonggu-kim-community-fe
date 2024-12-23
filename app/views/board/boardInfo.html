@@ -84,6 +84,17 @@
         <button class="popup-confirm-button" id="btn_comment_confirm">확인</button>
     </div>
     
+    <script>
+        window.addEventListener('load', () => {
+            const highResImage = "../../images/blue-back-v.1.jpg";
+            const img = new Image();
+            img.src = highResImage;
+            img.onload = () => {
+                document.body.style.backgroundImage = `url(${highResImage})`;
+            };
+        });
+    </script>
+    
     <script src="/js/common/auth.js" type="module"></script>
     <script src="/js/common/header.js" defer></script>
     <script src="/js/common/footer.js" defer></script>

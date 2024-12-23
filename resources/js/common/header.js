@@ -110,7 +110,7 @@ function setupHeaderEvents() {
     if (header) {
         header.addEventListener("click", () => {
             const currentUrl = window.location.href.split('/').pop();
-            if (currentUrl !== ("login") && currentUrl !== ("register")) {
+            if (currentUrl !== ("login") && currentUrl !== ("register") && currentUrl !== ("")) {
                 window.location.href = "/board";
             }
         });
