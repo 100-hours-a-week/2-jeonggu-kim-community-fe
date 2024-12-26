@@ -21,6 +21,10 @@ body {
     font-size: 1.5rem;
     margin-bottom: 20px;
 }
+.register-container label {
+    display: block;
+    text-align: left;
+}
 form {
     display: flex;
     flex-direction: column;
