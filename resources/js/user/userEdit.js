@@ -20,7 +20,7 @@ const loadUserInfo = async () => {
         });
         if (response.ok) {
             const result = await response.json();
-            if (result.message === 'success' && result.data) {
+            if (result.data) {
                 document.getElementById('txt_email').value = result.data.email;
                 document.getElementById('txt_nickname').value = result.data.nickname;
                 document.getElementById('img_profile_url').setAttribute("src", result.data.profile_url);
