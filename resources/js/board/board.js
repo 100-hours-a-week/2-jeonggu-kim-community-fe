@@ -117,7 +117,7 @@ const createQueryParams = (currentPage, searchKey, searchValue) => {
 
 // NOTE : 응답 처리 함수
 const handleResponse = (result) => {
-    if (result.message === 'success' && result.data) {
+    if (result.data) {
         renderBoardList(result.data);
         hasMore = result.hasMore;
         currentPage++;

@@ -40,7 +40,7 @@ const loadBoardInfo = async () => {
 
         const result = await response.json();
         
-        if (result.message === 'success' && result.data) {
+        if (result.data) {
             renderBoardInfo(result.data); // NOTE : 데이터가 있으면 렌더링
         } else {
             alert('게시글 정보를 불러오는 데 실패했습니다.');
@@ -186,7 +186,7 @@ const addComment = async (board_id) => {
 
     const result = await response.json();
 
-    if (response.ok && result.message === 'success') {
+    if (response.ok) {
         alert('댓글이 성공적으로 추가되었습니다.');
         document.getElementById('txt_comment_info').value = ''; // NOTE : 댓글 입력 필드 초기화
         document.getElementById('btn_comment_add').disabled = true;
@@ -347,7 +347,7 @@ const toggleEditComment = (commentElement, comment) => {
 
         const commentEditElement = document.querySelector(`.edit-comment[data-comment-no="${comment.comment_id}"]`);
         if (commentEditElement) {
-            commentEditElement.innerHTML = "초기화"
+            commentEditElement.textContent = "초기화"
         }
     }
 }
@@ -355,7 +355,7 @@ const toggleEditComment = (commentElement, comment) => {
 // NOTE : 댓글 저장
 async function saveEditedComment(comment_id){
     const newContent = document.querySelector(`.comment-text[data-comment-no="${comment_id}"]`);
-    if(newContent.value == ""){
+    if(newContent.value.trim() == ""){
        alert("댓글 내용을 입력해주세요."); 
        return;
     }
@@ -388,7 +388,7 @@ async function saveEditedComment(comment_id){
 
             const commentEditElement = document.querySelector(`.edit-comment[data-comment-no="${comment_id}"]`);
             if (commentEditElement) {
-                commentEditElement.innerHTML = "수정" 
+                commentEditElement.textContent = "수정" 
             }
 
             const commentDate = document.querySelector(`[data-comment-no="${comment_id}"] .comment-date`)

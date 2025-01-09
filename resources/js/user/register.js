@@ -170,6 +170,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
             const users = await response.json();
             return users.data["success"];
+            const result = await response.json();
+            return result.data["success"];
         } catch (error) {
             console.error('Error fetching users:', error);
         }

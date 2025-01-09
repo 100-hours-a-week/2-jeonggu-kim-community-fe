@@ -45,7 +45,7 @@ const loadBoardData = async () => {
         });
         const result = await response.json();
             
-        if (result.message === 'success' && result.data) {
+        if (result.data) {
             displayBoardData(result.data);
         } else {
             alert('게시글을 찾을 수 없습니다.');

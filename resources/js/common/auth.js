@@ -24,7 +24,6 @@ const checkAuthentication = async () => {
 
         if (!response.ok) {
             const errorData = await response.json();
-            console.error('에러 메시지:', errorData.message);
             alert("로그인 후 이용해주세요.");
             window.location.href = "/";
             return false;
