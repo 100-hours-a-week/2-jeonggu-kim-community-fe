@@ -21,9 +21,15 @@
     margin: 0 auto;
     font-size: 32px;
 }
-.profile-icon {
+.header-icon {
     font-size: 1.5rem;
     width: 36px;
     height: 36px;
-    filter: drop-shadow(0 0 10px black)
+    filter: drop-shadow(0 0 10px black);
+    display:inline-block;
+}
+.notification-text {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
 }
