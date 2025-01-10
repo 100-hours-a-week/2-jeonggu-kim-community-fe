@@ -168,8 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error('사용자 조회 실패');
             }
     
-            const users = await response.json();
-            return users.data["success"];
             const result = await response.json();
             return result.data["success"];
         } catch (error) {
