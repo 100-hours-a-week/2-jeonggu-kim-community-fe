@@ -46,11 +46,12 @@ addButton.addEventListener("click", async () => {
                 'Content-Type': 'application/json' ,
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
+            credentials: "include",
         });
 
         const result = await response.json();
-        if (result.message === 'success') {
+        if (result.message === 'success' || result.success == true) {
             alert('게시글이 성공적으로 추가되었습니다.');
             window.location.href = '/board';
         } else {

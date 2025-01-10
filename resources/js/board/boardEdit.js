@@ -42,6 +42,7 @@ const loadBoardData = async () => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+            credentials: "include",
         });
         const result = await response.json();
             
@@ -64,18 +65,23 @@ const displayBoardData = (board) => {
     const image_url = board.image_url;
     const title = board.title;
     const content = board.content;
-    const image_nm = board.image_nm;
-    const image_form = board.image_nm.split(".").pop();
-    let image_split = image_nm;
-    if (image_nm.length > maxLength){
-        image_split = image_split.slice(0, maxLength) + "..." + image_form;
+    const image_nm = board.image_nm || "";  // null이나 undefined일 경우 빈 문자열로 설정
+
+    if (image_nm) {
+        const image_form = image_nm.split(".").pop();  // 확장자 추출
+        let image_split = image_nm;
+        if (image_nm.length > maxLength){
+            image_split = image_split.slice(0, maxLength) + "..." + image_form;
+        }
+
+        document.getElementById('img_upload').setAttribute('data-image-url', image_url || '');
+    
+        document.getElementById('file-name-display').setAttribute('data-image-nm', image_nm);
+        document.getElementById('file-name-display').textContent = image_split || '선택된 파일 없음';
     }
+
     titleInput.value = title;
     contentInput.value = content;
-    document.getElementById('img_upload').setAttribute('data-image-url', image_url || '');
-
-    document.getElementById('file-name-display').setAttribute('data-image-nm', image_nm);
-    document.getElementById('file-name-display').textContent = image_split || '선택된 파일 없음';
     editButton.disabled = false; // NOTE : 수정 버튼 활성화
 };
 
@@ -108,7 +114,8 @@ const handleUpdate = async () => {
                 'Content-Type': 'application/json' ,
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify(updatedData)
+            body: JSON.stringify(updatedData),
+            credentials: "include",
         });
 
         const result = await response.json();
