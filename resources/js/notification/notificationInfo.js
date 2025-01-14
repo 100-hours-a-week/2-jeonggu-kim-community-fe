@@ -68,23 +68,35 @@ const notification = async () => {
                     result.forEach((noticeInfo) => {
                         const li = document.createElement('li');
                         let notificationIds = noticeInfo.notification_ids;
-                        const contentDetail = noticeInfo.contentDetail;
+                        let contentDetail = noticeInfo.contentDetail;
+                        let count = noticeInfo.count;
+                        const boardId = noticeInfo.boardId;
                         const maxLength = 10;
                         if (contentDetail) {
-                            if (contentDetail.length > maxLength) {
-                                contentDetail = contentDetail.substring(0, maxLength) + '...';
+                            if (count){
+                                li.textContent = noticeInfo.content + " : (" + count + ") " + contentDetail;
+                            } else{
+                                if (contentDetail.length > maxLength) {
+                                    contentDetail = contentDetail.substring(0, maxLength) + '...';
+                                }
+                                li.textContent = noticeInfo.content + " : " + contentDetail;
                             }
-                            li.textContent = noticeInfo.content + " : " + contentDetail;
                         } else {
                             li.textContent = noticeInfo.content;
                         }
                         
                         if(notificationIds) {
                             li.dataset.notificationId = notificationIds;
-                        }else{
+                        } else{
                             li.dataset.notificationId = noticeInfo.notification_id;
                         }
                         
+                        if(boardId){
+                            li.addEventListener('click', () => {
+                                oneNotification(li, boardId);
+                            });
+                        }
+
                         ul.appendChild(li);
                     });
                 } else{
@@ -97,7 +109,7 @@ const notification = async () => {
 
                 let isInsideDropdown = false;
 
-                // 드롭다운 및 부모 요소에 이벤트 리스너 등록
+                // NOTE : 드롭다운 및 부모 요소에 이벤트 리스너 등록
                 dropdownDiv.addEventListener('mouseenter', () => {
                     isInsideDropdown = true; 
                 });
@@ -163,6 +175,29 @@ const allNotification = async (ulElement) => {
             ulElement.replaceChildren(emptyMessage);
 
             alert('모두 읽음 처리되었습니다!');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const oneNotification = async (liElement, boardId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const notificationId = liElement.dataset.notificationId;
+        const response = await fetch(`${apiUrl}/notifications/read`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({notificationIds : notificationId }),
+            credentials: "include",
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            window.location.href = `/boardInfo?board_id=${boardId}`;
         }
     } catch (error) {
         console.log(error);
