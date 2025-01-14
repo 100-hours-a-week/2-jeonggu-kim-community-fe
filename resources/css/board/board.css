@@ -230,7 +230,7 @@ margin-left: 5px;
     background: #f0f0f0;
 }
 .dropdown-menu.show {
-    display: block; /* 드롭다운이 보이도록 설정 */
+    display: block;
 }
 .loader {
     background-image: url('../../images/infinity-scroll.v.1.gif');
@@ -247,8 +247,8 @@ margin-left: 5px;
     background-size: contain;
     width: 100%;
     height: 50px;
-    opacity: 0; /* 처음에는 숨김 */
-    animation: fadeIn 1s forwards; /* 3초에 걸쳐 나타남 */
+    opacity: 0;
+    animation: fadeIn 1s forwards;
 }
 
 @keyframes fadeIn {
@@ -258,4 +258,61 @@ margin-left: 5px;
     to {
         opacity: 1;
     }
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 75px;
+    left: 20px;
+    width: 400px;
+
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-list li {
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.5); 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.notification-list li:hover {
+    background-color: #666;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px 10px 0 0;
+}
+
+.mark-all-read-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.mark-all-read-btn:hover {
+    background-color: #0056b3;
 }
