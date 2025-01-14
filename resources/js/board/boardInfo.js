@@ -482,8 +482,33 @@ async function saveEditedComment(comment_id){
     }
 }
 
+function getCookie(name) {
+    const cookies = document.cookie.split("; ");
+    for (let i = 0; i < cookies.length; i++) {
+        const [key, value] = cookies[i].split("=");
+        if (key === name) return value;
+    }
+    return null;
+}
+
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+}
+
 // NOTE : 조회수 증가
 const addViewCount = async(board_id) => {
+    const date = new Date();
+    const today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    const cookieName = `viewed_${board_id}`;
+
+    if (getCookie(cookieName) !== today) {
+        setCookie(cookieName, today, 1);
+    }else{
+        return;
+    }
+
     try {
         const response = await fetch(`${apiUrl}/boards/view/${board_id}`, { 
             method: 'PATCH',
@@ -498,6 +523,7 @@ const addViewCount = async(board_id) => {
         console.error('Error incrementing view count:', error);
     }
 }
+
 // NOTE : 좋아요 클릭 이벤트 처리 함수
 const likeBoard = async(board_id) => {
     try {
