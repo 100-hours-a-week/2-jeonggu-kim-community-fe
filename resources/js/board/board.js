@@ -17,7 +17,7 @@ const renderBoardList = async (boardList) => {
         const boardArticle = createBoardElement(board);
         boardSection.appendChild(boardArticle);
 
-        // NOTE : 하나씩 렌더링하는 효과를 위해 100ms 대기
+        // NOTE : 하나씩 렌더링하는 효과를 위해 100ms 대기 -> 50ms
         await new Promise((resolve) => setTimeout(resolve, 50));
     }
 };
@@ -35,7 +35,7 @@ const createBoardElement = (post) => {
         boardContent = boardContent.slice(0, maxLength) + '...';
     }
 
-    // 작성자 정보
+    // NOTE : 작성자 정보
     const boardAuthorDiv = document.createElement('div');
     boardAuthorDiv.classList.add('board-author');
 
@@ -54,7 +54,7 @@ const createBoardElement = (post) => {
     boardAuthorDiv.appendChild(authorIconDiv);
     boardAuthorDiv.appendChild(nicknameSpan);
 
-    // 게시글 내용
+    // NOTE : 게시글 내용
     const boardWrapperDiv = document.createElement('div');
     boardWrapperDiv.classList.add('board-wrapper');
 
@@ -69,11 +69,11 @@ const createBoardElement = (post) => {
     boardWrapperDiv.appendChild(titleH2);
     boardWrapperDiv.appendChild(contentSpan);
 
-    // 게시글 메타 정보
+    // NOTE : 게시글 메타 정보
     const boardMetaDiv = document.createElement('div');
     boardMetaDiv.classList.add('board-meta');
 
-    // 좋아요 정보
+    // NOTE : 좋아요 정보
     const likeSpan = document.createElement('span');
     const likeImg = document.createElement('img');
     likeImg.classList.add('board-img-icon', 'width-15');
@@ -82,7 +82,7 @@ const createBoardElement = (post) => {
     likeSpan.appendChild(likeImg);
     likeSpan.append(` ${post.like_cnt}`);
 
-    // 댓글 정보
+    // NOTE : 댓글 정보
     const commentSpan = document.createElement('span');
     const commentImg = document.createElement('img');
     commentImg.classList.add('board-img-icon', 'width-10');
@@ -91,7 +91,7 @@ const createBoardElement = (post) => {
     commentSpan.appendChild(commentImg);
     commentSpan.append(` ${post.comment_cnt}`);
 
-    // 조회수 정보
+    // NOTE : 조회수 정보
     const viewSpan = document.createElement('span');
     const viewImg = document.createElement('img');
     viewImg.classList.add('board-img-icon', 'width-10');
@@ -100,7 +100,7 @@ const createBoardElement = (post) => {
     viewSpan.appendChild(viewImg);
     viewSpan.append(` ${post.view_cnt}`);
 
-    // 작성일 정보
+    // NOTE : 작성일 정보
     const dateSpan = document.createElement('span');
     dateSpan.classList.add('board-date');
     const dateImg = document.createElement('img');
@@ -115,12 +115,12 @@ const createBoardElement = (post) => {
     boardMetaDiv.appendChild(viewSpan);
     boardMetaDiv.appendChild(dateSpan);
 
-    // 요소 추가
+    // NOTE : 요소 추가
     boardArticle.appendChild(boardAuthorDiv);
     boardArticle.appendChild(boardWrapperDiv);
     boardArticle.appendChild(boardMetaDiv);
 
-    // 게시글 클릭 이벤트 리스너
+    // NOTE : 게시글 클릭 이벤트 리스너
     boardArticle.addEventListener("click", () => {
         const board_id = boardArticle.dataset.board_id;
         window.location.href = `/boardInfo?board_id=${board_id}`;

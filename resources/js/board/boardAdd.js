@@ -1,6 +1,11 @@
 import { uploadFile, fetchConfig } from '/js/common/common.js';
 const config = await fetchConfig();
+import auth from '../common/auth.js';
 const apiUrl = config.apiUrl;
+
+window.onload = function () {
+    auth.requireLogin(); 
+};
 
 const titleInput = document.getElementById('txt_title');
 const contentInput = document.getElementById('txt_content');
@@ -46,8 +51,7 @@ addButton.addEventListener("click", async () => {
                 'Content-Type': 'application/json' ,
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify(formData),
-            credentials: "include",
+            body: JSON.stringify(formData)
         });
 
         const result = await response.json();

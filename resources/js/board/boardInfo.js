@@ -1,7 +1,8 @@
 import { formatDate, fetchConfig } from '/js/common/common.js';
-import { } from '/js/common/auth.js';
+// import { } from '/js/common/auth.js';
 const config = await fetchConfig();
 const apiUrl = config.apiUrl;
+import auth from '../common/auth.js';
 
 const editButton = document.getElementById("btn_edit");
 const deleteButton = document.getElementById("btn_delete");
@@ -561,6 +562,9 @@ document.getElementById('div_like_cnt').addEventListener('click', () => {
 
 (async () => {
     // 인증 성공 시 페이지 데이터 로드
-    loadBoardInfo();
-    loadComments();
+    auth.requireLogin(); 
+    if(auth.isLoggedIn()){
+        loadBoardInfo();
+        loadComments();
+    }
 })();

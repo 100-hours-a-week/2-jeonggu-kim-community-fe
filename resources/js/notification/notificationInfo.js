@@ -2,6 +2,8 @@ import { fetchConfig } from '/js/common/common.js';
 const config = await fetchConfig();
 const apiUrl = config.apiUrl;
 
+import auth from '../common/auth.js';
+
 // NOTE : 로그인 체크
 const checkAuthentication = async () => {
     const token = localStorage.getItem('token');
@@ -205,8 +207,7 @@ const oneNotification = async (liElement, boardId) => {
 };
 
 (async () => {
-    const isAuthenticated = await checkAuthentication();
-    if (isAuthenticated) {
+    if (auth.isLoggedIn()) {
         notification();
     }
 })();
