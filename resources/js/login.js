@@ -1,5 +1,6 @@
 import { fetchConfig, encodeBase64 } from '/js/common/common.js';
 const config = await fetchConfig();
+import auth from '../js/common/auth.js';
 
 const emailInput = document.getElementById("txt_email");
 const passwordInput = document.getElementById("txt_pwd");
@@ -78,7 +79,10 @@ loginButton.addEventListener("click", async (event) => {
       const result = await response.json();
       if (response.status === 200 && result.data["success"]) {
           localStorage.setItem("token", result.data.token);
+          auth.setLogin(); 
+          auth.setUserInfo({ email: email });
           alert("로그인에 성공하였습니다.");
+
           window.location.href = '/board';
       } else{
         alert("아이디와 비밀번호가 일치하지 않습니다.");

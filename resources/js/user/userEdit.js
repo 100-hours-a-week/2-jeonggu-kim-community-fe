@@ -1,4 +1,5 @@
 import { fetchConfig, uploadFile, encodeBase64 } from '/js/common/common.js';
+import auth from '../common/auth.js';
 
 const InfoEditButton = document.getElementById('btn_info_edit');
 const nicknameText = document.getElementById('txt_nickname');
@@ -15,6 +16,7 @@ const loadUserInfo = async () => {
         const response = await fetch(`${apiUrl}/users`, {
             method: 'GET',
             headers: {
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
             },
         });
@@ -178,6 +180,7 @@ const validateForm = (isValid, type) => {
 // NOTE : 이미지 파일 등록
 document.getElementById("img_profile_url").addEventListener('click', () => {
     document.getElementById('file_profile_url').click();
+    document.getElementById("background-layer").style.cursor = "url('../../images/cloud-icon-v.1.png'), auto";
 });
 
 // NOTE : 파일이 선택되면 서버에 업로드
@@ -248,6 +251,7 @@ const chkDuplication = async (key, value) => { // NOTE : (수정) function()에�
         }
 
         const users = await response.json();
+        
         return users.data["success"];
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -279,4 +283,10 @@ nicknameText.addEventListener("blur", async () => {
     validateForm(isValid, "nickname");
 });
 
-loadUserInfo();
+(async () => {
+    // 인증 성공 시 페이지 데이터 로드
+    auth.requireLogin(); 
+    if(auth.isLoggedIn()){
+        loadUserInfo();
+    }
+})();

@@ -1,3 +1,5 @@
+import auth from './auth.js';
+
 // NOTE : 공통 헤더 생성 함수
 function createHeader() {
     const currentUrl = window.location.href.split('/').pop();
@@ -64,6 +66,18 @@ function createHeader() {
             button.classList.add('text-center', 'header-menu');
             button.id = id;
             button.textContent = text;
+
+            // NOTE : 로그아웃 버튼일 경우 이벤트 리스너 추가
+            if (id === 'btn_logout_menu') {
+                button.addEventListener('click', () => {
+                    auth.logout(); 
+                });
+            }else if (id === 'btn_login_menu') {
+                button.addEventListener('click', () => {
+                    window.location.href = "/";
+                });
+            }
+            
             return button;
         };
 
@@ -75,9 +89,15 @@ function createHeader() {
         // profileMenu.appendChild(notificationButton);
 
         // NOTE : 회원정보수정, 비밀번호수정, 로그아웃 버튼
-        profileMenu.appendChild(createMenuButton('btn_profile_menu', '회원정보수정'));
-        profileMenu.appendChild(createMenuButton('btn_pwd_menu', '비밀번호수정'));
-        profileMenu.appendChild(createMenuButton('btn_logout_menu', '로그아웃'));
+        
+        // NOTE : 로그인 + 비로그인 나누기
+        if(auth.isLoggedIn()) {
+            profileMenu.appendChild(createMenuButton('btn_profile_menu', '회원정보수정'));
+            profileMenu.appendChild(createMenuButton('btn_pwd_menu', '비밀번호수정'));
+            profileMenu.appendChild(createMenuButton('btn_logout_menu', '로그아웃'));
+        }else{
+            profileMenu.appendChild(createMenuButton('btn_login_menu', '로그인'));
+        }
 
         profileContainer.appendChild(profileIconDiv);
         profileContainer.appendChild(profileMenu);

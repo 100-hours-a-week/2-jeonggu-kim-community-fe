@@ -1,4 +1,5 @@
 import { uploadFile, fetchConfig } from '/js/common/common.js';
+import auth from '../common/auth.js';
 
 const contentHelper = document.getElementById('p_content_helper');
 const titleInput = document.getElementById('txt_title');
@@ -6,6 +7,10 @@ const contentInput = document.getElementById('txt_content');
 const editButton = document.getElementById('btn_board_update');
 const token = localStorage.getItem("token");
 let apiUrl = '';
+
+window.onload = function () {
+    auth.requireLogin(); 
+};
 
 // NOTE : 제목, 내용 입력 시 등록 버튼 활성화/비활성화 및 색상 변경
 const toggleButtonState = () => {
