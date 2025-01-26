@@ -479,7 +479,6 @@ async function saveEditedComment(comment_id){
                 {
                     commentDate.insertAdjacentHTML('afterend', '<span class="board-change">(수정됨)</span>');
                 }
-            }else {
                 commentDivElement.dataset.isChange = 1;
             }
         } else {
