@@ -161,6 +161,7 @@ const loadComments = async () => {
                     const editedSpan = document.createElement('span');
                     editedSpan.classList.add('board-change');
                     editedSpan.textContent = `(수정됨)`;
+                    commentElement.dataset.isChange = comment.isChange;
                     commentInfo.appendChild(editedSpan);
                 }
 
@@ -372,6 +373,7 @@ const addCommentToList = (comment) => {
 
     const info = document.createElement('div');
     info.classList.add('comment-info');
+    info.dataset.isChange = comment.isChange;
 
     const img = document.createElement('img');
     img.classList.add('img_profile');
@@ -470,10 +472,15 @@ async function saveEditedComment(comment_id){
                 commentEditElement.textContent = "수정" 
             }
 
-            const commentDate = document.querySelector(`[data-comment-no="${comment_id}"] .comment-date`)
-            if(commentDate)
-            {
-                commentDate.insertAdjacentHTML('afterend', '<span class="board-change">(수정됨)</span>');
+            const commentDivElement = document.querySelector(`.comment[data-comment-no="${comment_id}"]`);
+            if(!commentDivElement.getAttribute('data-is-change')){
+                const commentDate = document.querySelector(`[data-comment-no="${comment_id}"] .comment-date`);
+                if(commentDate)
+                {
+                    commentDate.insertAdjacentHTML('afterend', '<span class="board-change">(수정됨)</span>');
+                }
+            }else {
+                commentDivElement.dataset.isChange = 1;
             }
         } else {
             alert('댓글 수정에 실패했습니다.');
