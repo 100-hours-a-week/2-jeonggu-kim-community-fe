@@ -159,8 +159,9 @@ const loadComments = async () => {
                 // 수정 여부 표시
                 if (comment.isChange) {
                     const editedSpan = document.createElement('span');
-                    editedSpan.classList.add('board-change');
+                    editedSpan.classList.add('comment-change');
                     editedSpan.textContent = `(수정됨)`;
+                    editedSpan.setAttribute('data-chg-time', formatDate(comment.chg_dt));
                     commentElement.dataset.isChange = comment.isChange;
                     commentInfo.appendChild(editedSpan);
                 }
@@ -373,7 +374,7 @@ const addCommentToList = (comment) => {
 
     const info = document.createElement('div');
     info.classList.add('comment-info');
-    info.dataset.isChange = comment.isChange;
+    info.dataset.isChange = comment.isChange || 0;
 
     const img = document.createElement('img');
     img.classList.add('img_profile');
@@ -454,6 +455,7 @@ async function saveEditedComment(comment_id){
 
         const commentElement = document.querySelector(`.save-comment[data-comment-no="${comment_id}"]`);
         if (response.ok) {
+            const result = await response.json();
             // NOTE : 댓글 텍스트를 `<input>`에서 `<p>`로 다시 변경
             const newCommentText = document.createElement('p');
             newCommentText.classList.add('comment-text');
@@ -477,9 +479,18 @@ async function saveEditedComment(comment_id){
                 const commentDate = document.querySelector(`[data-comment-no="${comment_id}"] .comment-date`);
                 if(commentDate)
                 {
-                    commentDate.insertAdjacentHTML('afterend', '<span class="board-change">(수정됨)</span>');
+                    const spanElement = document.createElement('span');
+                    spanElement.classList.add("comment-change");
+                    spanElement.setAttribute('data-chg-time', formatDate(result.data.chg_dt));
+                    spanElement.textContent = "(수정됨)";
+                    commentDate.insertAdjacentElement('afterend', spanElement);
                 }
                 commentDivElement.dataset.isChange = 1;
+            } else{
+                const commentDate = document.querySelector(`[data-comment-no="${comment_id}"] .comment-change`);
+                if(commentDate){
+                    commentDate.setAttribute('data-chg-time', formatDate(result.data.chg_dt));
+                }
             }
         } else {
             alert('댓글 수정에 실패했습니다.');
