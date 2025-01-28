@@ -518,8 +518,9 @@ function setCookie(name, value, days) {
 // NOTE : 조회수 증가
 const addViewCount = async(board_id) => {
     const date = new Date();
+    const email = auth.getUserInfo().email;
     const today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-    const cookieName = `viewed_${board_id}`;
+    const cookieName = `viewed_${board_id}_${email}`;
 
     if (getCookie(cookieName) !== today) {
         setCookie(cookieName, today, 1);
